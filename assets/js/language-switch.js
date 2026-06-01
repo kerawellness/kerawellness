@@ -17,18 +17,42 @@ function setLanguage(lang) {
   window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
 }
 
+function resolveVideoPath(filename) {
+  const pathname = window.location.pathname.replace(/\\/g, '/');
+  const segments = pathname.split('/').filter(Boolean);
+  const pageName = segments[segments.length - 1] || '';
+  const inAssetsHtml = pageName.endsWith('.html') && segments.includes('assets');
+  return inAssetsHtml ? `videos/${filename}` : `assets/videos/${filename}`;
+}
+
 function getHeroVideoSource() {
   const pathname = window.location.pathname.replace(/\\/g, '/').toLowerCase();
-  const mappings = [
-    { suffix: '/assets/index.html', src: '/assets/videos/homepage.mp4' },
-    { suffix: '/index.html', src: '/assets/videos/homepage.mp4' },
-    { suffix: '/assets/dental.html', src: '/assets/videos/dental.mp4' },
-    { suffix: '/assets/medical.html', src: '/assets/videos/medical.mp4' },
-  ];
-
-  const match = mappings.find(item => pathname.endsWith(item.suffix));
-  return match ? match.src : '';
+  if (pathname.includes('dental.html')) {
+    return resolveVideoPath('dental.mp4');
+  }
+  if (pathname.includes('medical.html')) {
+    return resolveVideoPath('medical.mp4');
+  }
+  return resolveVideoPath('homepage.mp4');
 }
+
+function scrollToConsultation(event) {
+  if (event && typeof event.preventDefault === 'function') {
+    event.preventDefault();
+  }
+  const section = document.getElementById('consultation');
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function bindConsultationCTAs() {
+  document.querySelectorAll('#mobileCallbackTrigger, #openCallbackBtn').forEach((el) => {
+    el.addEventListener('click', scrollToConsultation);
+  });
+}
+
+window.scrollToConsultation = scrollToConsultation;
 
 function setupHeroVideos() {
   const heroVideos = Array.from(document.querySelectorAll('.video-background video'));
@@ -42,7 +66,6 @@ function setupHeroVideos() {
     }
 
     video.dataset.loaded = 'true';
-    video.preload = 'none';
 
     let source = video.querySelector('source');
     if (!source) {
@@ -50,66 +73,44 @@ function setupHeroVideos() {
       source.type = 'video/mp4';
       video.appendChild(source);
     }
-    // Prefer a local copy in /assets/videos/ if the file exists, otherwise fall back to the external URL
-    const chooseVideoSrc = async (external) => {
-      try {
-        const filename = external.split('/').pop();
-        const localPath = `/assets/videos/${filename}`;
-        const resp = await fetch(localPath, { method: 'HEAD' });
-        if (resp.ok) return localPath;
-      } catch (e) {}
-      return external;
-    };
 
-    chooseVideoSrc(videoSrc).then(finalSrc => { source.src = finalSrc; video.load(); });
+    const filename = videoSrc.split('/').pop();
+    const finalSrc = videoSrc.startsWith('/assets/videos/')
+      ? resolveVideoPath(filename)
+      : videoSrc;
+
+    source.src = finalSrc;
+    video.preload = 'auto';
+    video.load();
 
     const markLoaded = () => video.classList.add('is-loaded');
     video.addEventListener('loadeddata', markLoaded, { once: true });
     video.addEventListener('loadedmetadata', markLoaded, { once: true });
     video.addEventListener('canplay', markLoaded, { once: true });
 
-    // loaded state and play will be handled after we set the source (chooseVideoSrc resolves)
-    const waitAndMark = () => {
-      if (video.readyState >= 1) {
+    video.play().catch(() => {});
+    window.setTimeout(() => {
+      if (!video.classList.contains('is-loaded')) {
         markLoaded();
-      } else {
-        window.setTimeout(markLoaded, 1500);
+        video.play().catch(() => {});
       }
-      video.play().catch(() => {});
-    };
-
-    // If source already set by chooseVideoSrc synchronously above, ensure we still attempt marking
-    chooseVideoSrc(videoSrc).then(() => waitAndMark()).catch(() => waitAndMark());
+    }, 1200);
   };
 
   const pageVideoSrc = getHeroVideoSource();
 
   heroVideos.forEach((video) => {
-    // If the video already has a source (markup) and is in a playable state, mark it loaded immediately
-    const existingSrc = video.querySelector('source')?.src || video.currentSrc;
-    if (existingSrc && video.readyState >= 1) {
-      video.classList.add('is-loaded');
-      // try to play if possible
-      video.play().catch(() => {});
-      return;
-    }
+    const sourceEl = video.querySelector('source');
+    const markupSrc = sourceEl?.getAttribute('src') || '';
+    const videoSrc = video.getAttribute('data-src') || markupSrc || pageVideoSrc;
 
-    const videoSrc = video.getAttribute('data-src') || pageVideoSrc;
     if (!videoSrc) {
       return;
     }
 
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            loadHeroVideo(video, videoSrc);
-            observer.disconnect();
-          }
-        });
-      }, { rootMargin: '200px 0px' });
-
-      observer.observe(video);
+    if (markupSrc && video.readyState >= 2) {
+      video.classList.add('is-loaded');
+      video.play().catch(() => {});
       return;
     }
 
@@ -122,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const preferredLang = localStorage.getItem('preferred_language') || 'en';
   setLanguage(preferredLang);
   setupHeroVideos();
+  bindConsultationCTAs();
 
   // Immediately reveal any hero videos that the browser already loaded before our JS ran
   document.querySelectorAll('.video-background video').forEach(v => {

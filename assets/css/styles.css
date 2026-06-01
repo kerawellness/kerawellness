@@ -425,6 +425,25 @@ nav.nav-scrolled .btn-header-cta {
   transform: translateY(-4px);
 }
 
+.btn-whatsapp {
+  background: #25d366;
+  color: #ffffff;
+  border: 1.5px solid #20ba59;
+  box-shadow: 0 10px 24px rgba(37, 211, 102, 0.35);
+}
+
+.btn-whatsapp:hover {
+  background: #1ebe57;
+  color: #ffffff;
+  border-color: #1a9f4a;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(37, 211, 102, 0.45);
+}
+
+.treatment-hero .btn-whatsapp {
+  color: #ffffff;
+}
+
 /* ============================================================
    HERO
    ============================================================ */
@@ -629,6 +648,92 @@ nav.nav-scrolled .btn-header-cta {
   top: 2px;
   font-size: clamp(16px, 2vw, 20px);
   font-weight: 900;
+}
+
+/* Before / After comparison (light sections) */
+.before-after-section {
+  background: var(--white);
+  padding: var(--section-py) 0;
+}
+
+.ba-visual {
+  max-width: min(920px, 100%);
+  margin: 0 auto clamp(1.5rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.ba-visual img {
+  width: 100%;
+  max-height: min(380px, 52vw);
+  object-fit: cover;
+  border-radius: clamp(16px, 3vw, 24px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  display: block;
+}
+
+.ba-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.ba-card {
+  text-align: center;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-gray);
+  border-radius: var(--radius-card);
+}
+
+.ba-card h3 {
+  color: var(--text-dark);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  margin-bottom: 0.75rem;
+}
+
+.ba-card p {
+  color: #475569;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+}
+
+.ba-label {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.ba-label--before {
+  background: #ea580c;
+  color: #ffffff;
+}
+
+.ba-label--after {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.testimonial-grid--cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 767px) {
+  .ba-grid,
+  .testimonial-grid--cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .ba-visual img {
+    max-height: min(280px, 65vw);
+  }
+
+  .ba-card {
+    padding: 1.25rem 1rem;
+  }
 }
 
 /* ============================================================

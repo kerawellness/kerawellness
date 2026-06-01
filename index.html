@@ -268,7 +268,7 @@
             <span class="lang-en">Get Free Treatment Plan</span>
             <span class="lang-ar">احصل على خطة علاج مجانية</span>
           </a>
-          <a href="https://wa.me/971500000000" class="btn btn-outline">
+          <a href="https://wa.me/971500000000" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
             <span class="lang-en">Chat on WhatsApp</span>
             <span class="lang-ar">تحدث معنا على واتساب</span>
           </a>
@@ -538,7 +538,7 @@
               <span class="lang-en">Get Free Treatment Plan</span>
               <span class="lang-ar">احصل على خطة علاج مجانية</span>
             </a>
-            <a href="https://wa.me/971500000000" class="btn btn-outline" target="_blank" rel="noopener noreferrer" style="width: 100%; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+            <a href="https://wa.me/971500000000" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer" style="width: 100%; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
               <span class="lang-en">Chat With Coordinator</span>
               <span class="lang-ar">تحدث مع منسق رعاية صحية</span>
             </a>
@@ -587,13 +587,6 @@
           <p class="lang-ar">مكتب ترجمة مخصص ومترجمون فوريون لتوفير رعاية مريحة وخصوصية تامة.</p>
         </div>
         <div class="why-card card-hover" data-reveal data-reveal-delay="160">
-          <div style="font-size: 28px; margin-bottom: 12px;">✈️</div>
-          <h3 class="lang-en">Travel Assistance</h3>
-          <h3 class="lang-ar">تسهيلات سفر متكاملة</h3>
-          <p class="lang-en">VIP airport sedan transfer, 5-star hotel bookings, and immediate clinical concierge.</p>
-          <p class="lang-ar">توصيل بسيارات سيدان فاخرة من المطار، وحجز فنادق 5 نجوم، وتنسيق طبي فوري.</p>
-        </div>
-        <div class="why-card card-hover" data-reveal data-reveal-delay="200">
           <div style="font-size: 28px; margin-bottom: 12px;">🏷️</div>
           <h3 class="lang-en">Transparent Pricing</h3>
           <h3 class="lang-ar">أسعار شفافة وباقات ثابتة</h3>
@@ -1248,50 +1241,33 @@
       }
     });
 
-    // Modal Callback Logic
-    const modal = document.getElementById("callbackModal");
-    const closeBtn = document.getElementById("closeCallbackBtn");
-    const callbackForm = document.getElementById("modalCallbackForm");
-    const modalSuccess = document.getElementById("modalSuccess");
+    function toggleSelector(cat) {
+      const dentalCard = document.getElementById("dentalCard");
+      const medicalCard = document.getElementById("medicalCard");
+      const dentalResults = document.getElementById("dentalResults");
+      const medicalResults = document.getElementById("medicalResults");
+      if (!dentalCard || !medicalCard) return;
 
-    // Wire up Mobile Bottom Sticky Bar's Free Consultation CTA
-    const mobileCallbackTrigger = document.getElementById("mobileCallbackTrigger");
-    if (mobileCallbackTrigger) {
-      mobileCallbackTrigger.addEventListener("click", () => {
-        modal.classList.add("active");
-        modalSuccess.style.display = "none";
-        callbackForm.style.display = "block";
-      });
-    }
-
-    // Support openCallbackBtn (desktop FAB is hidden via CSS, but trigger remains in DOM)
-    const openBtn = document.getElementById("openCallbackBtn");
-    if (openBtn) {
-      openBtn.addEventListener("click", () => {
-        modal.classList.add("active");
-        modalSuccess.style.display = "none";
-        callbackForm.style.display = "block";
-      });
-    }
-
-    closeBtn.addEventListener("click", () => {
-      modal.classList.remove("active");
-    });
-
-    window.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.classList.remove("active");
+      if (cat === "dental") {
+        const isActive = dentalCard.classList.contains("active");
+        dentalCard.classList.toggle("active", !isActive);
+        dentalResults?.classList.toggle("active", !isActive);
+        if (!isActive) {
+          medicalCard.classList.remove("active");
+          medicalResults?.classList.remove("active");
+        }
+      } else if (cat === "medical") {
+        const isActive = medicalCard.classList.contains("active");
+        medicalCard.classList.toggle("active", !isActive);
+        medicalResults?.classList.toggle("active", !isActive);
+        if (!isActive) {
+          dentalCard.classList.remove("active");
+          dentalResults?.classList.remove("active");
+        }
       }
-    });
+    }
+    window.toggleSelector = toggleSelector;
 
-    callbackForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      modalSuccess.style.display = "block";
-      callbackForm.style.display = "none";
-      setTimeout(() => {
-        modal.classList.remove("active");
-      }, 2000);
-    });
     // Force play background video to prevent browser autoplay blocks
     document.addEventListener("DOMContentLoaded", () => {
       const video = document.getElementById("heroVideo");

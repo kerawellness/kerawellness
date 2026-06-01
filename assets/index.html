@@ -482,37 +482,6 @@
       document.getElementById('indiaBar').style.width = data.bars.india;
     }
 
-    // Modal Callback Logic
-    const modal = document.getElementById("callbackModal");
-    const openBtn = document.getElementById("openCallbackBtn");
-    const closeBtn = document.getElementById("closeCallbackBtn");
-    const callbackForm = document.getElementById("modalCallbackForm");
-    const modalSuccess = document.getElementById("modalSuccess");
-
-    openBtn.addEventListener("click", () => {
-      modal.classList.add("active");
-      modalSuccess.style.display = "none";
-      callbackForm.style.display = "block";
-    });
-
-    closeBtn.addEventListener("click", () => {
-      modal.classList.remove("active");
-    });
-
-    window.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.classList.remove("active");
-      }
-    });
-
-    callbackForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      modalSuccess.style.display = "block";
-      callbackForm.style.display = "none";
-      setTimeout(() => {
-        modal.classList.remove("active");
-      }, 2000);
-    });
   </script>
   <script src="form.js"></script>
   <script src="./js/scroll-reveal.js" defer></script>

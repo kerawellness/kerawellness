@@ -194,7 +194,7 @@
   <section class="treatment-hero dental">
     <div class="video-background">
       <video autoplay muted loop playsinline preload="auto" id="heroVideo" aria-hidden="true">
-        <source src="/assets/videos/dental.mp4" type="video/mp4">
+        <source src="videos/dental.mp4" type="video/mp4">
       </video>
       <div class="video-overlay"></div>
     </div>
@@ -215,7 +215,7 @@
             <span class="lang-en">Get Free Treatment Plan</span>
             <span class="lang-ar">احصل على خطة علاج مجانية</span>
           </a>
-          <a href="https://wa.me/971500000000" class="btn btn-outline">
+          <a href="https://wa.me/971500000000" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
             <span class="lang-en">WhatsApp Specialist</span>
             <span class="lang-ar">تحدث مع أخصائي على واتساب</span>
           </a>
@@ -384,7 +384,7 @@
   </section>
 
   <!-- Section 4: Before & After Gallery -->
-  <section style="background: var(--white); padding: var(--section-py) 0;">
+  <section class="before-after-section">
     <div class="container">
       <div class="section-title" data-reveal>
         <h2 class="lang-en">Elite Smile Transformations</h2>
@@ -393,26 +393,26 @@
         <p class="lang-ar">حالات واقعية قبل وبعد لمرضى من دولة الإمارات خضعوا لإعادة تأهيل الأسنان التجميلي.</p>
       </div>
 
-      <div class="testimonial-visual" style="margin-bottom: 3rem; text-align: center;" data-reveal>
-        <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=1200&auto=format&fit=crop" alt="Stunning E-max veneers smile makeover outcome" style="width: 100%; max-height: 420px; object-fit: cover; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.06);">
+      <div class="ba-visual" data-reveal>
+        <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=1200&auto=format&fit=crop" alt="Stunning E-max veneers smile makeover outcome" loading="lazy">
       </div>
 
-      <div class="why-grid" style="grid-template-columns: repeat(2, 1fr); gap: 2rem;">
-        <div class="why-card" style="text-align: center;" data-reveal>
-          <div class="pain-label" style="background:#ea580c; color:#fff; display:inline-block; padding:6px 12px; border-radius:99px; margin-bottom:12px; font-weight:700;">
+      <div class="ba-grid">
+        <div class="ba-card" data-reveal>
+          <span class="ba-label ba-label--before">
             <span class="lang-en">BEFORE</span>
             <span class="lang-ar">قبل العلاج</span>
-          </div>
+          </span>
           <h3 class="lang-en">Discolored &amp; Chipped Arches</h3>
           <h3 class="lang-ar">أسنان متكسرة وفاقدة للمعان</h3>
           <p class="lang-en">Low structural confidence, difficulty chewing comfortable solid food, bite friction.</p>
           <p class="lang-ar">صعوبة مضغ الأطعمة الصلبة، عدم تناسق اصطفاف الأسنان، وتراجع الثقة بالمظهر الخارجي.</p>
         </div>
-        <div class="why-card" style="text-align: center;" data-reveal data-reveal-delay="100">
-          <div class="pain-label" style="background:#16a34a; color:#fff; display:inline-block; padding:6px 12px; border-radius:99px; margin-bottom:12px; font-weight:700;">
+        <div class="ba-card" data-reveal data-reveal-delay="100">
+          <span class="ba-label ba-label--after">
             <span class="lang-en">AFTER KèRa Wellness</span>
             <span class="lang-ar">بعد العلاج مع KèRa Wellness</span>
-          </div>
+          </span>
           <h3 class="lang-en">Custom E-max Porcelain Smile Makeover</h3>
           <h3 class="lang-ar">تجميل ابتسامة مخصص بفينير إيماكس</h3>
           <p class="lang-en">Perfect symmetry, bright natural shades, reinforced tooth bite, lifetime confidence.</p>
@@ -705,68 +705,7 @@
       }
     });
 
-    // Modal Callback Logic
-    const modal = document.getElementById("callbackModal");
-    const closeBtn = document.getElementById("closeCallbackBtn");
-    const callbackForm = document.getElementById("modalCallbackForm");
-    const modalSuccess = document.getElementById("modalSuccess");
-
-    // Wire up Mobile Bottom Sticky Bar's Free Consultation CTA
-    const mobileCallbackTrigger = document.getElementById("mobileCallbackTrigger");
-    if (mobileCallbackTrigger) {
-      mobileCallbackTrigger.addEventListener("click", () => {
-        modal.classList.add("active");
-        modalSuccess.style.display = "none";
-        callbackForm.style.display = "block";
-      });
-    }
-
-    // Support openCallbackBtn (desktop FAB is hidden via CSS, but trigger remains in DOM)
-    const openBtn = document.getElementById("openCallbackBtn");
-    if (openBtn) {
-      openBtn.addEventListener("click", () => {
-        modal.classList.add("active");
-        modalSuccess.style.display = "none";
-        callbackForm.style.display = "block";
-      });
-    }
-
-    closeBtn.addEventListener("click", () => {
-      modal.classList.remove("active");
-    });
-
-    window.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.classList.remove("active");
-      }
-    });
-
-    callbackForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      modalSuccess.style.display = "block";
-      callbackForm.style.display = "none";
-      setTimeout(() => {
-        modal.classList.remove("active");
-      }, 2000);
-    });
-
-    // Main logic runner
     document.addEventListener("DOMContentLoaded", () => {
-      // Force play background video to prevent browser autoplay blocks
-      const video = document.getElementById("heroVideo");
-      if (video && video.querySelector("source")) {
-        video.play().catch(err => {
-          console.log("Autoplay blocked. Registering interaction trigger.", err);
-          const playOnInteraction = () => {
-            video.play();
-            document.removeEventListener("click", playOnInteraction);
-            document.removeEventListener("touchstart", playOnInteraction);
-          };
-          document.addEventListener("click", playOnInteraction);
-          document.addEventListener("touchstart", playOnInteraction);
-        });
-      }
-      
       runCalculation();
     });
   </script>
