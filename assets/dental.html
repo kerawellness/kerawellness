@@ -193,7 +193,7 @@
   <!-- Treatment Hero Section -->
   <section class="treatment-hero dental">
     <div class="video-background">
-      <video autoplay muted loop playsinline preload="auto" id="heroVideo" aria-hidden="true">
+      <video autoplay muted loop playsinline preload="auto" id="heroVideo" data-video-file="dental.mp4" aria-hidden="true">
         <source src="videos/dental.mp4" type="video/mp4">
       </video>
       <div class="video-overlay"></div>
@@ -331,7 +331,7 @@
               <option value="UAE" selected>الإمارات العربية المتحدة</option>
             </select>
           </div>
-          <div class="calc-field-item">
+          <div class="calc-field-item" id="calcQtyWrap">
             <label>
               <span class="lang-en">Quantity</span>
               <span class="lang-ar">الكمية</span>
@@ -629,17 +629,35 @@
       rct: { name: "Root Canal Treatment", dubai: 3000, india: 900, selectOption: "Cosmetic Dentistry" },
       crown: { name: "Zirconia Crown", dubai: 3000, india: 1400, selectOption: "Cosmetic Dentistry" },
       veneer: { name: "Porcelain Veneers", dubai: 4150, india: 1400, selectOption: "Cosmetic Dentistry" },
-      makeover: { name: "Smile Makeover", dubai: 50000, india: 16500, selectOption: "Cosmetic Dentistry" },
-      whitening: { name: "Teeth Whitening", dubai: 2500, india: 1050, selectOption: "Cosmetic Dentistry" },
-      invisalign: { name: "Invisalign", dubai: 15000, india: 7000, selectOption: "Cosmetic Dentistry" }
+      makeover: { name: "Smile Makeover", dubai: 50000, india: 16500, selectOption: "Cosmetic Dentistry", noQty: true },
+      whitening: { name: "Teeth Whitening", dubai: 2500, india: 1050, selectOption: "Cosmetic Dentistry", noQty: true },
+      invisalign: { name: "Invisalign", dubai: 15000, india: 7000, selectOption: "Cosmetic Dentistry", noQty: true }
     };
+
+    const noQtyTreatments = new Set(["makeover", "whitening", "invisalign"]);
+
+    function updateQtyField(treatmentKey) {
+      const wrap = document.getElementById("calcQtyWrap");
+      const group = document.querySelector(".calc-field-group");
+      const hide = noQtyTreatments.has(treatmentKey);
+      if (wrap) {
+        wrap.style.display = hide ? "none" : "";
+      }
+      if (group) {
+        group.classList.toggle("calc-field-group--no-qty", hide);
+      }
+      if (hide) {
+        document.getElementById("calcQty").value = "1";
+      }
+    }
 
     function runCalculation() {
       const isAr = document.documentElement.getAttribute('lang') === 'ar';
       const selectId = isAr ? "calcTreatmentAr" : "calcTreatment";
       const treatmentKey = document.getElementById(selectId).value;
-      const qty = parseInt(document.getElementById("calcQty").value) || 1;
       const data = pricingData[treatmentKey];
+      updateQtyField(treatmentKey);
+      const qty = data.noQty ? 1 : (parseInt(document.getElementById("calcQty").value, 10) || 1);
 
       const dubaiCost = data.dubai * qty;
       const indiaCost = data.india * qty;

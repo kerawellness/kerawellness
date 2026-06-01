@@ -17,23 +17,25 @@ function setLanguage(lang) {
   window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
 }
 
-function resolveVideoPath(filename) {
-  const pathname = window.location.pathname.replace(/\\/g, '/');
-  const segments = pathname.split('/').filter(Boolean);
-  const pageName = segments[segments.length - 1] || '';
-  const inAssetsHtml = pageName.endsWith('.html') && segments.includes('assets');
-  return inAssetsHtml ? `videos/${filename}` : `assets/videos/${filename}`;
+function getVideoFilenameForPage() {
+  const pathname = window.location.pathname.replace(/\\/g, '/').toLowerCase();
+  if (pathname.includes('dental')) {
+    return 'dental.mp4';
+  }
+  if (pathname.includes('medical')) {
+    return 'medical.mp4';
+  }
+  return 'homepage.mp4';
 }
 
-function getHeroVideoSource() {
-  const pathname = window.location.pathname.replace(/\\/g, '/').toLowerCase();
-  if (pathname.includes('dental.html')) {
-    return resolveVideoPath('dental.mp4');
-  }
-  if (pathname.includes('medical.html')) {
-    return resolveVideoPath('medical.mp4');
-  }
-  return resolveVideoPath('homepage.mp4');
+function getVideoSourceCandidates(filename) {
+  return [
+    `videos/${filename}`,
+    `./videos/${filename}`,
+    `assets/videos/${filename}`,
+    `/videos/${filename}`,
+    `/assets/videos/${filename}`,
+  ];
 }
 
 function scrollToConsultation(event) {
@@ -60,12 +62,14 @@ function setupHeroVideos() {
     return;
   }
 
-  const loadHeroVideo = (video, videoSrc) => {
-    if (!videoSrc || video.dataset.loaded === 'true') {
+  const loadHeroVideo = (video, candidates) => {
+    if (!candidates.length || video.dataset.loaded === 'true') {
       return;
     }
 
     video.dataset.loaded = 'true';
+    video.muted = true;
+    video.playsInline = true;
 
     let source = video.querySelector('source');
     if (!source) {
@@ -74,47 +78,65 @@ function setupHeroVideos() {
       video.appendChild(source);
     }
 
-    const filename = videoSrc.split('/').pop();
-    const finalSrc = videoSrc.startsWith('/assets/videos/')
-      ? resolveVideoPath(filename)
-      : videoSrc;
+    const markLoaded = () => {
+      video.classList.add('is-loaded');
+      video.play().catch(() => {});
+    };
 
-    source.src = finalSrc;
-    video.preload = 'auto';
-    video.load();
-
-    const markLoaded = () => video.classList.add('is-loaded');
     video.addEventListener('loadeddata', markLoaded, { once: true });
-    video.addEventListener('loadedmetadata', markLoaded, { once: true });
     video.addEventListener('canplay', markLoaded, { once: true });
 
-    video.play().catch(() => {});
+    let attempt = 0;
+
+    const trySource = () => {
+      if (attempt >= candidates.length) {
+        markLoaded();
+        return;
+      }
+
+      const nextSrc = candidates[attempt];
+      attempt += 1;
+      source.src = nextSrc;
+      video.preload = 'auto';
+      video.load();
+    };
+
+    video.addEventListener('error', () => {
+      trySource();
+    });
+
+    trySource();
+
     window.setTimeout(() => {
       if (!video.classList.contains('is-loaded')) {
         markLoaded();
-        video.play().catch(() => {});
       }
-    }, 1200);
+    }, 1500);
   };
 
-  const pageVideoSrc = getHeroVideoSource();
-
   heroVideos.forEach((video) => {
-    const sourceEl = video.querySelector('source');
-    const markupSrc = sourceEl?.getAttribute('src') || '';
-    const videoSrc = video.getAttribute('data-src') || markupSrc || pageVideoSrc;
+    const filename =
+      video.getAttribute('data-video-file') || getVideoFilenameForPage();
+    const markupSrc = video.querySelector('source')?.getAttribute('src') || '';
+    const candidates = [
+      ...new Set([
+        markupSrc,
+        video.getAttribute('data-src'),
+        ...getVideoSourceCandidates(filename),
+      ].filter(Boolean)),
+    ];
 
-    if (!videoSrc) {
+    if (!candidates.length) {
       return;
     }
 
-    if (markupSrc && video.readyState >= 2) {
+    if (video.readyState >= 2 && markupSrc) {
       video.classList.add('is-loaded');
       video.play().catch(() => {});
       return;
     }
 
-    loadHeroVideo(video, videoSrc);
+    loadHeroVideo(video, candidates);
   });
 }
 
