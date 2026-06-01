@@ -1543,10 +1543,6 @@ html[lang="ar"] .trust-messages ul {
 
 /* --- TABLET LANDSCAPE (768px – 991px) --- */
 @media (max-width: 991px) {
-  .nav-links {
-    display: none;
-  }
-
   .pain-wrapper {
     grid-template-columns: 1fr;
   }
@@ -2468,10 +2464,7 @@ html[lang="ar"] .trust-messages ul {
    BILINGUAL (EN/AR) SWITCHER & RTL LAYOUTS
    ============================================================ */
 
-/* Google Font for Arabic Cairo and Tajawal */
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap');
-
-/* Language Toggling rules */
+/* Language Toggling rules (Cairo font loaded via <link> in HTML) */
 html[lang="en"] .lang-ar {
   display: none !important;
 }
@@ -2503,15 +2496,29 @@ html[lang="ar"] p {
   text-align: right;
 }
 
-/* Align navigation menu appropriately in RTL */
-html[lang="ar"] .nav-wrapper {
-  flex-direction: row-reverse;
+html[lang="ar"] .lang-ar,
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3,
+html[lang="ar"] .btn,
+html[lang="ar"] .subgrid-item,
+html[lang="ar"] .selector-card h3 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
-html[lang="ar"] .nav-links {
-  margin-right: auto;
-  margin-left: 0;
-  flex-direction: row-reverse;
+/* Arabic nav — desktop horizontal bar only */
+@media (min-width: 992px) {
+  html[lang="ar"] .nav-wrapper {
+    flex-direction: row-reverse;
+  }
+
+  html[lang="ar"] .nav-links {
+    margin-right: auto;
+    margin-left: 0;
+    flex-direction: row-reverse;
+  }
 }
 
 html[lang="ar"] .nav-links a {
@@ -2832,28 +2839,191 @@ html[lang="ar"] .category-btn {
   .lang-switcher {
     margin: 0 0 1rem 0;
   }
+
+  /* Arabic mobile drawer (slide from left, stacked links) */
+  html[lang="ar"] .nav-wrapper {
+    flex-direction: row-reverse;
+  }
+
+  html[lang="ar"] .nav-links {
+    right: auto !important;
+    left: -100%;
+    flex-direction: column !important;
+    align-items: flex-end;
+    text-align: right;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    width: min(300px, 88vw);
+    padding: 100px 28px 40px 32px;
+    box-shadow: 10px 0 30px rgba(12, 27, 51, 0.15);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html[lang="ar"] .nav-links.active {
+    left: 0 !important;
+    right: auto !important;
+  }
+
+  html[lang="ar"] .nav-links a {
+    width: 100%;
+    text-align: right;
+    white-space: normal;
+    font-size: 1.05rem;
+    line-height: 1.45;
+    padding: 6px 0;
+  }
+
+  html[lang="ar"] .lang-switcher {
+    width: 100%;
+    justify-content: flex-end;
+    margin: 0 0 1.25rem 0;
+  }
+
+  html[lang="ar"] .nav-dropdown {
+    width: 100%;
+    text-align: right;
+  }
+
+  html[lang="ar"] .dropdown-menu {
+    padding: 5px 15px 5px 0;
+    text-align: right;
+  }
+
+  html[lang="ar"] .burger-menu-btn span {
+    transform-origin: right center;
+  }
+
+  html[lang="ar"] .burger-menu-btn.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-2px, -1px);
+  }
+
+  html[lang="ar"] .burger-menu-btn.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-2px, 1px);
+  }
 }
 
-/* RTL Mobile Drawer slider */
-html[lang="ar"] .nav-links {
-  right: auto;
-  left: -100%;
-  box-shadow: 10px 0 30px rgba(12, 27, 51, 0.15);
-}
+/* Arabic mobile — prevent overflow and improve readability */
+@media (max-width: 767px) {
+  html[lang="ar"] {
+    -webkit-text-size-adjust: 100%;
+  }
 
-html[lang="ar"] .nav-links.active {
-  left: 0;
-  right: auto;
-}
+  html[lang="ar"] .hero h1,
+  html[lang="ar"] .treatment-hero h1 {
+    font-size: clamp(1.28rem, 5.2vw, 1.8rem) !important;
+    line-height: 1.45;
+    letter-spacing: 0;
+  }
 
-html[lang="ar"] .burger-menu-btn span {
-  transform-origin: right center;
-}
-html[lang="ar"] .burger-menu-btn.active span:nth-child(1) {
-  transform: rotate(-45deg) translate(-2px, -1px);
-}
-html[lang="ar"] .burger-menu-btn.active span:nth-child(3) {
-  transform: rotate(45deg) translate(-2px, 1px);
+  html[lang="ar"] .section-title h2,
+  html[lang="ar"] .cta h2 {
+    font-size: clamp(1.15rem, 4.6vw, 1.55rem);
+    line-height: 1.4;
+  }
+
+  html[lang="ar"] .hero p,
+  html[lang="ar"] .treatment-hero p,
+  html[lang="ar"] .section-title p {
+    font-size: clamp(0.88rem, 3.3vw, 1rem);
+    line-height: 1.65;
+  }
+
+  html[lang="ar"] .hero-content,
+  html[lang="ar"] .treatment-hero-content {
+    max-width: 100%;
+  }
+
+  html[lang="ar"] .hero-badge {
+    font-size: clamp(0.68rem, 2.6vw, 0.8rem);
+    line-height: 1.45;
+    padding: 8px 12px;
+    max-width: 100%;
+  }
+
+  html[lang="ar"] .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0.65rem;
+  }
+
+  html[lang="ar"] .hero-buttons .btn {
+    width: 100%;
+    max-width: none;
+    white-space: normal;
+    line-height: 1.35;
+    padding: 13px 14px;
+    font-size: 0.92rem;
+    justify-content: center;
+    text-align: center;
+  }
+
+  html[lang="ar"] .hero-bottom {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  html[lang="ar"] .hero-box {
+    width: 100%;
+    min-width: 0;
+  }
+
+  html[lang="ar"] .hero-box h3,
+  html[lang="ar"] .hero-box p {
+    font-size: clamp(0.85rem, 3.2vw, 0.95rem);
+    line-height: 1.4;
+  }
+
+  html[lang="ar"] .mobile-sticky-cta .btn {
+    font-size: clamp(0.7rem, 2.6vw, 0.82rem);
+    padding: 10px 6px;
+    line-height: 1.25;
+    white-space: normal;
+    text-align: center;
+    min-height: 44px;
+  }
+
+  html[lang="ar"] .selector-card h3 {
+    font-size: clamp(1rem, 4vw, 1.15rem);
+    line-height: 1.35;
+  }
+
+  html[lang="ar"] .selector-subtext {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  html[lang="ar"] .subgrid-item {
+    font-size: 0.8rem;
+    line-height: 1.35;
+    padding: 11px 8px;
+  }
+
+  html[lang="ar"] .calc-field-item label {
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
+
+  html[lang="ar"] .calc-btn-full,
+  html[lang="ar"] .submit-btn {
+    font-size: 0.95rem;
+    line-height: 1.35;
+    white-space: normal;
+  }
+
+  html[lang="ar"] .trust-messages li {
+    font-size: 0.84rem;
+    line-height: 1.35;
+  }
+
+  html[lang="ar"] .faq-question {
+    font-size: 0.92rem;
+    line-height: 1.4;
+    padding: 14px 12px;
+  }
+
 }
 
 /* Form Helper Classes */
