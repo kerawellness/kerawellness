@@ -863,19 +863,45 @@ nav.nav-scrolled .btn-header-cta {
   gap: var(--gap-grid);
   position: relative;
   z-index: 2;
+  align-items: stretch;
+}
+
+/* Homepage 5-step journey row */
+.process-grid--steps {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.4vw, 1.25rem);
+}
+
+@media (max-width: 1199px) {
+  .process-grid--steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 991px) {
+  .process-grid--steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .process-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  min-height: clamp(210px, 20vw, 250px);
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-top: 1px solid rgba(255, 255, 255, 0.12);
-  padding: clamp(1.5rem, 3.5vw, 2.75rem);
+  padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1rem, 2vw, 1.35rem);
   border-radius: clamp(1.25rem, 3vw, 2.25rem);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
+  box-sizing: border-box;
 }
 
 .process-card:hover {
@@ -887,12 +913,14 @@ nav.nav-scrolled .btn-header-cta {
 .process-top {
   display: flex;
   align-items: center;
-  margin-bottom: clamp(16px, 2.5vw, 30px);
+  justify-content: center;
+  width: 100%;
+  margin-bottom: clamp(12px, 2vw, 18px);
 }
 
 .process-number {
-  width: clamp(48px, 6vw, 70px);
-  height: clamp(48px, 6vw, 70px);
+  width: clamp(44px, 5vw, 56px);
+  height: clamp(44px, 5vw, 56px);
   flex-shrink: 0;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--gold-dark), var(--gold));
@@ -901,23 +929,42 @@ nav.nav-scrolled .btn-header-cta {
   justify-content: center;
   color: var(--white);
   font-weight: 800;
-  font-size: clamp(14px, 1.5vw, 20px);
+  font-size: clamp(14px, 1.5vw, 18px);
 }
 
+/* Decorative line removed inside cards — was misaligned on narrow columns */
 .process-line {
-  height: 2px;
-  flex: 1;
-  margin-left: 18px;
-  background: linear-gradient(to right, rgba(var(--gold-rgb), 0.65), rgba(var(--gold-rgb), 0));
+  display: none;
 }
 
 .process-card h3 {
-  font-size: var(--fs-h3-proc);
-  margin-bottom: clamp(10px, 1.8vw, 18px);
+  font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+  line-height: 1.35;
+  margin-bottom: clamp(8px, 1.2vw, 12px);
+  width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .process-card p {
   color: rgba(250, 250, 248, 0.82);
+  font-size: clamp(0.82rem, 0.95vw, 0.9rem);
+  line-height: 1.55;
+  width: 100%;
+  margin: 0;
+  flex: 1;
+}
+
+.process .process-card,
+html[lang="ar"] .process .process-card {
+  text-align: center;
+  align-items: center;
+}
+
+html[lang="ar"] .process .process-top {
+  flex-direction: row;
+  justify-content: center;
 }
 
 /* ============================================================
@@ -1581,11 +1628,6 @@ html[lang="ar"] .trust-messages ul {
   .story-points {
     grid-template-columns: 1fr;
   }
-
-  /* Hide the decorative line between process steps — not enough space */
-  .process-line {
-    display: none;
-  }
 }
 
 /* --- TABLET PORTRAIT (600px – 767px) --- */
@@ -1598,8 +1640,13 @@ html[lang="ar"] .trust-messages ul {
     flex: 0 0 auto;
   }
 
-  .process-grid {
+  .process-grid,
+  .process-grid--steps {
     grid-template-columns: 1fr;
+  }
+
+  .process-grid--steps .process-card {
+    min-height: auto;
   }
 
   .story-points {
@@ -2611,7 +2658,6 @@ html[lang="ar"] .form-grid {
 }
 
 html[lang="ar"] .why-card,
-html[lang="ar"] .process-card,
 html[lang="ar"] .testimonial-card,
 html[lang="ar"] .benefit-card {
   text-align: right;
@@ -2622,15 +2668,6 @@ html[lang="ar"] .why-card svg {
   margin-right: 0;
 }
 
-html[lang="ar"] .process-top {
-  flex-direction: row-reverse;
-}
-
-html[lang="ar"] .process-line {
-  background: linear-gradient(to left, var(--gold), rgba(var(--gold-rgb), 0));
-  right: 50%;
-  left: auto;
-}
 
 html[lang="ar"] .treatment-selector-container {
   direction: rtl;
