@@ -1,297 +1,1329 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>World-Class Dental Care With Up to 70% Lower Costs Than Dubai.</title>
-  <meta name="description" content="World-class dental treatment in Chennai for Dubai patients. Premium coordinated care with transparent planning and significant savings.">
+  <title>Premium Medical &amp; Dental Concierge India | Save up to 70%</title>
+  <meta name="description"
+    content="Luxury medical and dental concierge travel for UAE patients. Save up to 70% on implants, smile makeovers, cardiac, and orthopedic treatments in JCI accredited Indian hospitals.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/styles.css">
+  <script src="./assets/js/language-switch.js"></script>
+  <style>
+    /* Styling adjustments specifically for the Black, Gold and White Luxury look */
+    body {
+      background: var(--white);
+      color: var(--text-dark);
+    }
+    nav {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1.5px solid var(--border-gray);
+    }
+    .hero {
+      position: relative;
+      color: white;
+      padding-top: clamp(6.25rem, 12vw, 8rem);
+      min-height: 85svh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: transparent !important;
+    }
+    .video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .video-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      filter: saturate(0.95) contrast(1.05);
+      transition: opacity 0.8s ease;
+    }
+    .video-background video.is-loaded {
+      opacity: 1;
+    }
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(17, 17, 17, 0.45);
+      z-index: 2;
+    }
+    .hero .container {
+      position: relative;
+      z-index: 3;
+    }
+    .hero h1 {
+      color: white;
+    }
+    .hero p {
+      color: rgba(255, 255, 255, 0.82);
+    }
+    .hero-badge {
+      background: rgba(17, 17, 17, 0.52);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .hero-box {
+      background: rgba(17, 17, 17, 0.52);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: white;
+    }
+    .hero-box h3 {
+      color: white;
+    }
+    .hero-box p {
+      color: rgba(255, 255, 255, 0.78);
+    }
+    .btn-outline {
+      color: var(--black);
+      border: 2px solid var(--black);
+    }
+    .btn-outline:hover {
+      background: rgba(0,0,0,0.05);
+    }
+    .why-us {
+      background: var(--white) !important;
+      color: var(--text-dark) !important;
+    }
+    .why-us h2 {
+      color: var(--black) !important;
+    }
+    .why-us p {
+      color: var(--text-muted) !important;
+    }
+    .why-card {
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border-gray);
+    }
+    .why-card h3 {
+      color: var(--black);
+    }
+    .why-card p {
+      color: var(--text-muted);
+    }
+    .process {
+      background: var(--bg-secondary) !important;
+      color: var(--text-dark) !important;
+    }
+    .process h2 {
+      color: var(--black) !important;
+    }
+    .process-card {
+      background: var(--white);
+      border: 1.5px solid var(--border-gray);
+    }
+    .process-card h3 {
+      color: var(--black);
+    }
+    .process-card p {
+      color: var(--text-muted);
+    }
+    .process-number {
+      background: var(--black);
+      color: var(--gold);
+    }
+    .process-line {
+      background: linear-gradient(to right, var(--gold), rgba(var(--gold-rgb), 0));
+    }
+    .cta {
+      background: linear-gradient(to right, rgba(255,255,255,0.92), rgba(255,255,255,0.98)),
+                  url("https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=2200&auto=format&fit=crop") center/cover no-repeat;
+      color: var(--text-dark);
+    }
+    .cta h2 {
+      color: var(--black);
+    }
+    .cta p {
+      color: var(--text-muted);
+    }
+    form {
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--gold);
+    }
+    .form-label {
+      color: var(--black);
+    }
+    input, select, textarea {
+      border: 1px solid var(--border-gray);
+    }
+    .form-note {
+      color: var(--text-muted);
+    }
+    footer {
+      background: var(--black);
+      border-top: 2px solid var(--gold);
+    }
+  </style>
 </head>
+
 <body>
+
+  <!-- Floating Consultation Callback Trigger (Callback Modal is active on desktop) -->
+  <button class="floating-callback-btn" id="openCallbackBtn" aria-label="Request Instant Callback">
+    <svg fill="currentColor" viewBox="0 0 24 24">
+      <path d="M6.62 10.79a15.15 15.15 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.11-.27 11.36 11.36 0 0 0 3.58.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.58 1 1 0 0 1-.27 1.11z"/>
+    </svg>
+  </button>
+
+  <!-- Instant Callback Modal -->
+  <div class="callback-modal" id="callbackModal">
+    <div class="callback-modal-content">
+      <button class="callback-modal-close" id="closeCallbackBtn" aria-label="Close modal">&times;</button>
+      <h3 class="lang-en">Instant VIP Callback</h3>
+      <h3 class="lang-ar">اتصال فوري لكبار الشخصيات</h3>
+      <p class="lang-en">Enter your details below. A dedicated healthcare coordinator will call you back on WhatsApp within 15 minutes.</p>
+      <p class="lang-ar">أدخل بياناتك أدناه. سيتصل بك منسق رعاية صحية مخصص على واتساب في غضون 15 دقيقة.</p>
+      <form id="modalCallbackForm">
+        <input type="text" name="name" class="lang-en" placeholder="Your Name" required>
+        <input type="text" name="name_ar" class="lang-ar" placeholder="الاسم الكامل" required>
+        <input type="tel" name="phone" placeholder="WhatsApp (e.g. +971...)" required>
+        <button type="submit" class="btn btn-primary" style="width: 100%; background: var(--black); color: var(--gold); border-color: var(--black);">
+          <span class="lang-en">Request Callback Now</span>
+          <span class="lang-ar">طلب اتصال الآن</span>
+        </button>
+      </form>
+      <div id="modalSuccess" style="display: none; color: #16a34a; margin-top: 15px; font-weight: 700;">
+        <span class="lang-en">✓ Request received! We will call you shortly.</span>
+        <span class="lang-ar">✓ تم استلام الطلب! سنتصل بك قريبًا.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persistent Mobile Bottom Sticky CTA -->
+  <div class="mobile-sticky-cta">
+    <a href="https://wa.me/971500000000" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
+      <span class="lang-en">WhatsApp</span>
+      <span class="lang-ar">واتساب</span>
+    </a>
+    <button class="btn btn-primary" id="mobileCallbackTrigger" style="background: var(--black); color: var(--gold); border-color: var(--black);">
+      <span class="lang-en">Free Consultation</span>
+      <span class="lang-ar">استشارة مجانية</span>
+    </button>
+  </div>
 
   <nav>
     <div class="container nav-wrapper">
-      <div class="logo">DENTAL GLOBAL CARE</div>
+      <a href="index.html" class="logo" style="color: var(--black);">KèRa Wellness<span style="color: var(--gold);">.</span></a>
       <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#why">Why India</a>
-        <a href="#process">Process</a>
-        <a href="#testimonials">Testimonials</a>
+        <div class="lang-switcher">
+          <button onclick="setLanguage('en')" class="lang-btn btn-lang-en active" id="btn-lang-en">EN</button>
+          <span>|</span>
+          <button onclick="setLanguage('ar')" class="lang-btn btn-lang-ar" id="btn-lang-ar">عربي</button>
+        </div>
+        <a href="index.html" class="lang-en">Home</a>
+        <a href="index.html" class="lang-ar">الرئيسية</a>
+        <a href="assets/dental.html" class="lang-en">Dental</a>
+        <a href="assets/dental.html" class="lang-ar">طب الأسنان</a>
+        <a href="assets/medical.html" class="lang-en">Medical</a>
+        <a href="assets/medical.html" class="lang-ar">الطب العام</a>
+        <a href="#journey" class="lang-en">Patient Journey</a>
+        <a href="#journey" class="lang-ar">رحلة المريض</a>
+        <a href="#testimonials" class="lang-en">Success Stories</a>
+        <a href="#testimonials" class="lang-ar">قصص النجاح</a>
       </div>
-      <a href="#consultation" class="btn btn-primary btn-header-cta">Book Consultation</a>
+      <button class="burger-menu-btn" id="burgerMenuBtn" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
 
+  <!-- Hero Section -->
   <section class="hero">
+    <div class="video-background">
+      <video autoplay muted loop playsinline preload="auto" id="heroVideo" referrerpolicy="no-referrer">
+        <source src="assets/videos/homepage.mp4" type="video/mp4">
+      </video>
+      <div class="video-overlay"></div>
+    </div>
     <div class="container">
-      <div class="hero-content" data-reveal>
-        <div class="hero-badge">Dubai Patient Coordination • Premium Chennai Dental Program</div>
-        <h1>World-Class Dental Care With Up to 70% Lower Costs Than Dubai</h1>
-        <p>World-class dental treatment in Chennai for Dubai patients seeking advanced care, transparent planning, and a premium coordinated experience.</p>
+      <div class="hero-content" data-reveal style="max-width: 780px; position: relative; z-index: 3;">
+        <div class="hero-badge">
+          <span class="lang-en">Discreet UAE Medical Travel Concierge</span>
+          <span class="lang-ar">بوابة السفر الطبي الفاخر لدولة الإمارات</span>
+        </div>
+        <h1>
+          <span class="lang-en">Premium Medical &amp; Dental Treatment In India</span>
+          <span class="lang-ar">علاج طبي وطب أسنان ممتاز في الهند</span>
+        </h1>
+        <p class="lang-en">Save up to 70% compared to Dubai while receiving treatment from leading board-certified specialists and internationally accredited JCI partner hospitals. Complete luxury travel support included.</p>
+        <p class="lang-ar">وفر حتى 70% مقارنة بأسعار دبي مع تلقي العلاج على أيدي نخبة من الأطباء والاستشاريين المعتمدين في أرقى المستشفيات الشريكة الحاصلة على اعتماد JCI الدولي. تشمل خدماتنا ترتيبات السفر الفاخرة بالكامل.</p>
         <div class="hero-buttons">
-          <a href="#consultation" class="btn btn-primary">Book Free Consultation</a>
-          <a href="https://wa.me/971500000000" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Talk to Patient Coordinator</a>
+          <a href="#consultation" class="btn btn-primary" style="background: var(--black); color: var(--gold); border-color: var(--black);">
+            <span class="lang-en">Get Free Treatment Plan</span>
+            <span class="lang-ar">احصل على خطة علاج مجانية</span>
+          </a>
+          <a href="https://wa.me/971500000000" class="btn btn-outline">
+            <span class="lang-en">Chat on WhatsApp</span>
+            <span class="lang-ar">تحدث معنا على واتساب</span>
+          </a>
         </div>
-        <div class="hero-bottom">
-          <div class="hero-box" data-reveal data-reveal-delay="100">
-            <h3>12,000+</h3>
-            <p>Dental Procedures</p>
+        <div class="hero-bottom" style="margin-top: 3.5rem;">
+          <div class="hero-box">
+            <h3 class="lang-en">UAE Patient Focus</h3>
+            <h3 class="lang-ar">اهتمام خاص بمرضى الإمارات</h3>
+            <p class="lang-en">Specialized Arabic Desk</p>
+            <p class="lang-ar">مكتب مخصص للغة العربية</p>
           </div>
-          <div class="hero-box" data-reveal data-reveal-delay="200">
-            <h3>18+</h3>
-            <p>Years Experience</p>
+          <div class="hero-box">
+            <h3 class="lang-en">70% Savings</h3>
+            <h3 class="lang-ar">توفير يصل إلى 70%</h3>
+            <p class="lang-en">India Cost Advantage</p>
+            <p class="lang-ar">الميزة التنافسية للتكلفة في الهند</p>
           </div>
-          <div class="hero-box" data-reveal data-reveal-delay="300">
-            <h3>70%</h3>
-            <p>Average Savings</p>
+          <div class="hero-box">
+            <h3 class="lang-en">Tier-1 Hospitals</h3>
+            <h3 class="lang-ar">مستشفيات الفئة الأولى</h3>
+            <p class="lang-en">JCI &amp; NABH Trust</p>
+            <p class="lang-ar">اعتماد JCI و NABH الموثوق</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="pain">
+  <!-- Section 2: Treatment Selector (funnel gateway) -->
+  <section class="treatment-selector" style="background: #ffffff; padding: 4rem 0;">
     <div class="container">
       <div class="section-title" data-reveal>
-        <h2>More Than Treatment — A Better Life Experience</h2>
-        <p>Many Dubai patients delay dental treatment because of extremely high UAE pricing.</p>
+        <h2 class="lang-en">Select Your Care Specialty</h2>
+        <h2 class="lang-ar">اختر تخصصك الطبي</h2>
+        <p class="lang-en">Which medical category are you looking for? Tap to view sub-treatments and link to dedicated resources.</p>
+        <p class="lang-ar">ما هي الفئة الطبية التي تبحث عنها؟ اضغط لعرض العلاجات الفرعية والروابط الطبية المخصصة.</p>
       </div>
-      <div class="pain-wrapper">
-        <div class="pain-card pain-left card-hover" data-reveal data-reveal-delay="0">
-          <div class="pain-label">BEFORE</div>
-          <h3>What Patients Usually Face</h3>
-          <ul>
-            <li>Delaying implants and smile correction because of expensive Dubai pricing</li>
-            <li>Difficulty eating comfortably due to damaged or missing teeth</li>
-            <li>Low confidence while smiling socially</li>
-            <li>Fear of hidden treatment costs</li>
-            <li>Stress about unclear treatment planning</li>
-            <li>Living with discomfort longer than necessary</li>
-          </ul>
+
+      <div class="treatment-selector-container" data-reveal>
+        <!-- Dental Selector Card -->
+        <div class="selector-card" id="dentalCard" onclick="toggleSelector('dental')">
+          <h3>
+            <span class="lang-en">🦷 Dental Treatments</span>
+            <span class="lang-ar">🦷 علاجات الأسنان</span>
+          </h3>
+          <p class="selector-subtext lang-en">Implants, Veneers, All-on-4, Full Reconstruction</p>
+          <p class="selector-subtext lang-ar">زراعة الأسنان، الفينير، زراعة الكل في 4، إعادة التأهيل الكامل</p>
         </div>
-        <div class="pain-card pain-right card-hover" data-reveal data-reveal-delay="120">
-          <div class="pain-label">AFTER</div>
-          <h3>Life After Treatment With Us</h3>
-          <ul>
-            <li>Confident smile restoration with premium dental care</li>
-            <li>Comfortable eating, speaking, and smiling again</li>
-            <li>Transparent treatment planning before travelling</li>
-            <li>Professionally coordinated patient support</li>
-            <li>Premium experience without Dubai-level costs</li>
-            <li>Peace of mind throughout the treatment journey</li>
-          </ul>
+
+        <!-- Medical Selector Card -->
+        <div class="selector-card" id="medicalCard" onclick="toggleSelector('medical')">
+          <h3>
+            <span class="lang-en">❤️ Medical Treatments</span>
+            <span class="lang-ar">❤️ العلاجات الطبية</span>
+          </h3>
+          <p class="selector-subtext lang-en">Cardiology, Joint Reconstruction, IVF, Oncology</p>
+          <p class="selector-subtext lang-ar">أمراض القلب، زراعة المفاصل، أطفال الأنابيب، الأورام</p>
+        </div>
+      </div>
+
+      <!-- Dental Results Grid -->
+      <div class="selector-results" id="dentalResults">
+        <div style="background: var(--gold-light); padding: 2rem; border-radius: 20px; border: 1px solid rgba(var(--gold-rgb), 0.35);">
+          <h4 style="margin-bottom: 1.5rem; text-align: center; color: var(--black);" class="lang-en">Select Dental Sub-Treatment</h4>
+          <h4 style="margin-bottom: 1.5rem; text-align: center; color: var(--black);" class="lang-ar">اختر علاج الأسنان الفرعي</h4>
+          <div class="treatment-subgrid">
+            <a href="assets/dental.html#implants" class="subgrid-item">
+              <span class="lang-en">Dental Implants</span>
+              <span class="lang-ar">زراعة الأسنان</span>
+            </a>
+            <a href="assets/dental.html#rehab" class="subgrid-item">
+              <span class="lang-en">Full Mouth Rehabilitation</span>
+              <span class="lang-ar">إعادة تأهيل كامل للفم</span>
+            </a>
+            <a href="assets/dental.html#all4" class="subgrid-item">
+              <span class="lang-en">All-on-4 Implants</span>
+              <span class="lang-ar">زراعة الأسنان الكل في 4</span>
+            </a>
+            <a href="assets/dental.html#all6" class="subgrid-item">
+              <span class="lang-en">All-on-6 Implants</span>
+              <span class="lang-ar">زراعة الأسنان الكل في 6</span>
+            </a>
+            <a href="assets/dental.html#veneers" class="subgrid-item">
+              <span class="lang-en">Porcelain Veneers</span>
+              <span class="lang-ar">فينير البورسلين</span>
+            </a>
+            <a href="assets/dental.html#makeover" class="subgrid-item">
+              <span class="lang-en">Smile Makeover</span>
+              <span class="lang-ar">تجميل الابتسامة</span>
+            </a>
+            <a href="assets/dental.html#crowns" class="subgrid-item">
+              <span class="lang-en">Zirconia Crowns</span>
+              <span class="lang-ar">تيجان الزيركون</span>
+            </a>
+            <a href="assets/dental.html#rct" class="subgrid-item">
+              <span class="lang-en">Root Canal Treatment</span>
+              <span class="lang-ar">علاج عصب الأسنان</span>
+            </a>
+            <a href="assets/dental.html#ortho" class="subgrid-item">
+              <span class="lang-en">Orthodontics</span>
+              <span class="lang-ar">تقويم الأسنان</span>
+            </a>
+            <a href="assets/dental.html#cosmetic" class="subgrid-item">
+              <span class="lang-en">Cosmetic Dentistry</span>
+              <span class="lang-ar">طب الأسنان التجميلي</span>
+            </a>
+          </div>
+          <div style="text-align: center; margin-top: 1.5rem;">
+            <a href="assets/dental.html" class="btn btn-primary" style="background: var(--black); color: var(--gold); border-color: var(--black);">
+              <span class="lang-en">View Dedicated Dental Page</span>
+              <span class="lang-ar">عرض صفحة طب الأسنان المخصصة</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Medical Results Grid -->
+      <div class="selector-results" id="medicalResults">
+        <div style="background: var(--gold-light); padding: 2rem; border-radius: 20px; border: 1px solid rgba(var(--gold-rgb), 0.35);">
+          <h4 style="margin-bottom: 1.5rem; text-align: center; color: var(--black);" class="lang-en">Select Medical Specialties</h4>
+          <h4 style="margin-bottom: 1.5rem; text-align: center; color: var(--black);" class="lang-ar">اختر التخصصات الطبية</h4>
+          <div class="treatment-subgrid">
+            <a href="assets/medical.html#cardiology" class="subgrid-item">
+              <span class="lang-en">Cardiology (Heart)</span>
+              <span class="lang-ar">أمراض القلب</span>
+            </a>
+            <a href="assets/medical.html#ortho" class="subgrid-item">
+              <span class="lang-en">Orthopedics (Knee/Hip)</span>
+              <span class="lang-ar">جراحة العظام (الركبة/الفخذ)</span>
+            </a>
+            <a href="assets/medical.html#oncology" class="subgrid-item">
+              <span class="lang-en">Oncology (Cancer)</span>
+              <span class="lang-ar">علاج الأورام (السرطان)</span>
+            </a>
+            <a href="assets/medical.html#ivf" class="subgrid-item">
+              <span class="lang-en">IVF &amp; Fertility Care</span>
+              <span class="lang-ar">أطفال الأنابيب وتنشيط الخصوبة</span>
+            </a>
+            <a href="assets/medical.html#neurology" class="subgrid-item">
+              <span class="lang-en">Neurology</span>
+              <span class="lang-ar">طب وجراحة الأعصاب</span>
+            </a>
+            <a href="assets/medical.html#cosmeticsurg" class="subgrid-item">
+              <span class="lang-en">Cosmetic Surgery</span>
+              <span class="lang-ar">جراحة التجميل</span>
+            </a>
+            <a href="assets/medical.html#bariatric" class="subgrid-item">
+              <span class="lang-en">Bariatric Surgery</span>
+              <span class="lang-ar">جراحات السمنة</span>
+            </a>
+            <a href="assets/medical.html#transplant" class="subgrid-item">
+              <span class="lang-en">Organ Transplant</span>
+              <span class="lang-ar">زراعة الأعضاء</span>
+            </a>
+            <a href="assets/medical.html#spine" class="subgrid-item">
+              <span class="lang-en">Spine Surgery</span>
+              <span class="lang-ar">جراحة العمود الفقري</span>
+            </a>
+          </div>
+          <div style="text-align: center; margin-top: 1.5rem;">
+            <a href="assets/medical.html" class="btn btn-primary" style="background: var(--black); color: var(--gold); border-color: var(--black);">
+              <span class="lang-en">View Dedicated Medical Page</span>
+              <span class="lang-ar">عرض الصفحة الطبية المخصصة</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 3: Savings Calculator -->
+  <section class="savings-calc" style="background: #fbfbfb; padding: var(--section-py) 0;">
+    <div class="container">
+      <div class="section-title" data-reveal>
+        <h2 class="lang-en">Interactive Savings Calculator</h2>
+        <h2 class="lang-ar">حاسبة التوفير التفاعلية</h2>
+        <p class="lang-en">Estimate the massive cost benefits of premium medical care in India vs. the UAE in real-time.</p>
+        <p class="lang-ar">احسب التوفير الهائل عند اختيار الرعاية الطبية الممتازة في الهند مقارنة بدولة الإمارات في الوقت الفعلي.</p>
+      </div>
+
+      <div class="calc-container" data-reveal style="max-width: 960px;">
+        
+        <!-- Step 1: Select Category Segment Control -->
+        <div class="calc-category-selector">
+          <button class="category-btn active" id="catBtnDental" onclick="setCalcCategory('dental')">
+            <span class="lang-en">🦷 Dental Care</span>
+            <span class="lang-ar">🦷 علاج الأسنان</span>
+          </button>
+          <button class="category-btn" id="catBtnMedical" onclick="setCalcCategory('medical')">
+            <span class="lang-en">❤️ Medical Care</span>
+            <span class="lang-ar">❤️ الرعاية الطبية</span>
+          </button>
+        </div>
+
+        <div class="calc-field-group">
+          <!-- Step 2: Select Treatment Dropdown -->
+          <div class="calc-field-item">
+            <label>
+              <span class="lang-en">Select Treatment</span>
+              <span class="lang-ar">اختر العلاج</span>
+            </label>
+            <select id="calcTreatment" class="lang-en" onchange="runCalculation()">
+              <!-- Populated dynamically by JS -->
+            </select>
+            <select id="calcTreatmentAr" class="lang-ar" onchange="runCalculation()">
+              <!-- Populated dynamically by JS -->
+            </select>
+          </div>
+          
+          <div class="calc-field-item">
+            <label>
+              <span class="lang-en">Country (From)</span>
+              <span class="lang-ar">بلد الإقامة</span>
+            </label>
+            <select id="calcCountry" class="lang-en">
+              <option value="UAE" selected>United Arab Emirates</option>
+            </select>
+            <select id="calcCountryAr" class="lang-ar">
+              <option value="UAE" selected>الإمارات العربية المتحدة</option>
+            </select>
+          </div>
+          
+          <!-- Step 3: Dynamic Quantity ( Medically Relevant Options ) -->
+          <div class="calc-field-item calc-qty-wrapper" id="calcQtyWrapper">
+            <label id="calcQtyLabel">
+              <span class="lang-en">Quantity</span>
+              <span class="lang-ar">الكمية</span>
+            </label>
+            <select id="calcQtySelect" onchange="runCalculation()">
+              <!-- Populated dynamically by JS -->
+            </select>
+          </div>
+        </div>
+
+        <div class="calc-result-wrapper" style="border-top: 1px solid rgba(var(--gold-rgb), 0.2); padding-top: 2rem;">
+          <div class="comparison-bars">
+            <div class="bar-item">
+              <div class="bar-label">
+                <span class="lang-en">Dubai / UAE Average Cost</span>
+                <span class="lang-ar">متوسط التكلفة في دبي / الإمارات</span>
+                <span id="resDubaiPrice" style="color: #ea580c; font-weight:800;">AED 32,000</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill dubai" id="resDubaiBar" style="width: 100%; background: #ea580c;"></div>
+              </div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">
+                <span class="lang-en">India Premier Package Cost</span>
+                <span class="lang-ar">تكلفة باقة الهند الممتازة</span>
+                <span id="resIndiaPrice" style="color: var(--black); font-weight:800;">AED 10,000</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill india" id="resIndiaBar" style="width: 31.25%; background: linear-gradient(90deg, var(--gold-dark), var(--gold));"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="savings-card" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div>
+              <h4 class="lang-en">Estimated Savings</h4>
+              <h4 class="lang-ar">التوفير التقديري</h4>
+              <div class="savings-amount" id="resSavingsAmt" style="color: var(--gold); font-size: 2.25rem; font-weight: 800;">AED 22,000</div>
+            </div>
+            <a href="#consultation" class="btn btn-primary" onclick="setFormTreatment()" style="width: 100%; background: var(--black); color: var(--gold); border-color: var(--black); font-weight: 700;">
+              <span class="lang-en">Get Free Treatment Plan</span>
+              <span class="lang-ar">احصل على خطة علاج مجانية</span>
+            </a>
+            <a href="https://wa.me/971500000000" class="btn btn-outline" target="_blank" rel="noopener noreferrer" style="width: 100%; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+              <span class="lang-en">Chat With Coordinator</span>
+              <span class="lang-ar">تحدث مع منسق رعاية صحية</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="why-us" id="why">
+  <!-- Section 4: Why UAE Patients Choose India -->
+  <section class="why-us" id="why" style="padding: 4rem 0;">
     <div class="container">
       <div class="section-title" data-reveal>
-        <h2 style="color: white;">Why Dubai Patients Choose Chennai</h2>
-        <p style="color: #dbe4ee;">Premium care standards with significantly lower operating costs compared to Dubai.</p>
+        <h2 class="lang-en">Why UAE Residents Select India</h2>
+        <h2 class="lang-ar">لماذا يختار سكان الإمارات العلاج في الهند؟</h2>
+        <p class="lang-en">Premium care guidelines designed specifically to cater to high-end patient expectations.</p>
+        <p class="lang-ar">معايير رعاية طبية ممتازة مصممة خصيصاً لتلبية التوقعات العالية للمرضى.</p>
       </div>
-      <div class="why-grid">
-        <div class="why-card card-hover" data-reveal data-reveal-delay="0">
-          <h3>International Implant Systems</h3>
-          <p>Straumann, Nobel Biocare, Invisalign and globally trusted technologies.</p>
+      <div class="why-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <div class="why-card card-hover" data-reveal>
+          <div style="font-size: 28px; margin-bottom: 12px;">🏥</div>
+          <h3 class="lang-en">Internationally Accredited Hospitals</h3>
+          <h3 class="lang-ar">مستشفيات معتمدة دولياً</h3>
+          <p class="lang-en">Partnering with premier JCI and NABH accredited corporate clinical giants.</p>
+          <p class="lang-ar">شراكات حصرية مع كبرى المستشفيات الحاصلة على اعتمادات JCI و NABH الدولية.</p>
+        </div>
+        <div class="why-card card-hover" data-reveal data-reveal-delay="40">
+          <div style="font-size: 28px; margin-bottom: 12px;">👨‍⚕️</div>
+          <h3 class="lang-en">Experienced Specialists</h3>
+          <h3 class="lang-ar">أطباء واستشاريون ذوو خبرة</h3>
+          <p class="lang-en">Surgeons with US, UK, and European clinical fellowships and decades of experience.</p>
+          <p class="lang-ar">أطباء وجراحون حاصلون على زمالات طبية أمريكية وبريطانية وأوروبية مع خبرة عقود.</p>
         </div>
         <div class="why-card card-hover" data-reveal data-reveal-delay="80">
-          <h3>Premium Specialist Care</h3>
-          <p>Experienced specialists with advanced digital dentistry systems.</p>
+          <div style="font-size: 28px; margin-bottom: 12px;">💰</div>
+          <h3 class="lang-en">Up To 70% Lower Costs</h3>
+          <h3 class="lang-ar">تكاليف أقل بنسبة تصل إلى 70%</h3>
+          <p class="lang-en">Significant financial advantages compared to private UAE hospital quotes.</p>
+          <p class="lang-ar">ميزات مالية وتوفير كبير مقارنة بعروض أسعار المستشفيات الخاصة في الإمارات.</p>
+        </div>
+        <div class="why-card card-hover" data-reveal data-reveal-delay="120">
+          <div style="font-size: 28px; margin-bottom: 12px;">💬</div>
+          <h3 class="lang-en">Arabic &amp; English Support</h3>
+          <h3 class="lang-ar">دعم باللغتين العربية والإنجليزية</h3>
+          <p class="lang-en">Discreet, dedicated translation desks and patient care wing representatives.</p>
+          <p class="lang-ar">مكتب ترجمة مخصص ومترجمون فوريون لتوفير رعاية مريحة وخصوصية تامة.</p>
         </div>
         <div class="why-card card-hover" data-reveal data-reveal-delay="160">
-          <h3>Transparent Planning</h3>
-          <p>Understand procedures and pricing before travelling.</p>
+          <div style="font-size: 28px; margin-bottom: 12px;">✈️</div>
+          <h3 class="lang-en">Travel Assistance</h3>
+          <h3 class="lang-ar">تسهيلات سفر متكاملة</h3>
+          <p class="lang-en">VIP airport sedan transfer, 5-star hotel bookings, and immediate clinical concierge.</p>
+          <p class="lang-ar">توصيل بسيارات سيدان فاخرة من المطار، وحجز فنادق 5 نجوم، وتنسيق طبي فوري.</p>
         </div>
-        <div class="why-card card-hover" data-reveal data-reveal-delay="240">
-          <h3>Dubai Patient Coordination</h3>
-          <p>Dedicated support for consultation, travel, treatment, and follow-up.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <div class="story-wrapper">
-        <div class="story-image" data-reveal>
-          <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1800&auto=format&fit=crop" alt="Modern dental clinic">
-        </div>
-        <div class="story-content" data-reveal data-reveal-delay="100">
-          <h2>A Premium Dental Experience Designed for International Patients</h2>
-          <p>Our international dental program combines advanced treatment facilities in Chennai with a smooth and professionally coordinated experience for Dubai patients.</p>
-          <div class="story-points">
-            <div class="story-box card-hover" data-reveal data-reveal-delay="0">
-              <h4>Dedicated Coordinator</h4>
-              <p>Single point of contact throughout your journey.</p>
-            </div>
-            <div class="story-box card-hover" data-reveal data-reveal-delay="80">
-              <h4>Luxury Experience</h4>
-              <p>Modern clinics, premium care, and advanced technology.</p>
-            </div>
-            <div class="story-box card-hover" data-reveal data-reveal-delay="160">
-              <h4>Travel Assistance</h4>
-              <p>Airport coordination and accommodation guidance included.</p>
-            </div>
-            <div class="story-box card-hover" data-reveal data-reveal-delay="240">
-              <h4>Post-Treatment Follow-Up</h4>
-              <p>Continued support after returning to Dubai.</p>
-            </div>
-          </div>
+        <div class="why-card card-hover" data-reveal data-reveal-delay="200">
+          <div style="font-size: 28px; margin-bottom: 12px;">🏷️</div>
+          <h3 class="lang-en">Transparent Pricing</h3>
+          <h3 class="lang-ar">أسعار شفافة وباقات ثابتة</h3>
+          <p class="lang-en">Fixed structures, digital scans, and complete plans provided before flight.</p>
+          <p class="lang-ar">باقات أسعار ثابتة ومحددة مسبقاً بناءً على فحوصاتك قبل السفر بدون أي رسوم خفية.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="process" id="process">
+  <!-- Section 5: How It Works -->
+  <section class="process" id="journey" style="padding: 4rem 0;">
     <div class="container">
       <div class="section-title" data-reveal>
-        <h2 style="color: white;">Simple. Coordinated. Transparent.</h2>
-        <p style="color: #dbe4ee;">We make the entire treatment journey smooth and stress-free for international patients.</p>
+        <h2 class="lang-en">Seamless 5-Step Process</h2>
+        <h2 class="lang-ar">رحلة علاج ميسرة في 5 خطوات</h2>
+        <p class="lang-en">How we coordinate your premium medical journey flawlessly from start to finish.</p>
+        <p class="lang-ar">كيف ننسق رحلتك العلاجية الفاخرة بمنتهى السلاسة من البداية وحتى العودة سالماً.</p>
       </div>
-      <div class="process-grid">
-        <div class="process-card card-hover" data-reveal data-reveal-delay="0">
+      <div class="process-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+        <div class="process-card card-hover" data-reveal>
           <div class="process-top">
             <div class="process-number">1</div>
             <div class="process-line"></div>
           </div>
-          <h3>Book Online Consultation</h3>
-          <p>Share your concerns and treatment goals through our consultation form.</p>
+          <h3 class="lang-en">1. Submit Reports</h3>
+          <h3 class="lang-ar">1. إرسال التقارير</h3>
+          <p class="lang-en">Share medical files or scans via our secure portal.</p>
+          <p class="lang-ar">شارك ملفاتك الطبية أو صور الأشعة عبر بوابتنا الآمنة.</p>
         </div>
-        <div class="process-card card-hover" data-reveal data-reveal-delay="120">
+        <div class="process-card card-hover" data-reveal data-reveal-delay="50">
           <div class="process-top">
             <div class="process-number">2</div>
             <div class="process-line"></div>
           </div>
-          <h3>Discuss Your Treatment Plan</h3>
-          <p>Meet our specialists and patient coordinator through Zoom consultation.</p>
+          <h3 class="lang-en">2. Free Consultation</h3>
+          <h3 class="lang-ar">2. استشارة مجانية</h3>
+          <p class="lang-en">Digital video consultation with our board specialists.</p>
+          <p class="lang-ar">استشارة مرئية رقمية مع أطبائنا الاستشاريين.</p>
         </div>
-        <div class="process-card card-hover" data-reveal data-reveal-delay="240">
+        <div class="process-card card-hover" data-reveal data-reveal-delay="100">
           <div class="process-top">
             <div class="process-number">3</div>
+            <div class="process-line"></div>
           </div>
-          <h3>Travel &amp; Receive Treatment</h3>
-          <p>Visit Chennai with complete support for treatment and follow-up.</p>
+          <h3 class="lang-en">3. Receive Plan</h3>
+          <h3 class="lang-ar">3. استلام الخطة</h3>
+          <p class="lang-en">Receive your custom medical quote and scheduling options.</p>
+          <p class="lang-ar">احصل على خطة علاجية مخصصة وعروض أسعار وتواريخ مقترحة.</p>
+        </div>
+        <div class="process-card card-hover" data-reveal data-reveal-delay="150">
+          <div class="process-top">
+            <div class="process-number">4</div>
+            <div class="process-line"></div>
+          </div>
+          <h3 class="lang-en">4. Travel Assistance</h3>
+          <h3 class="lang-ar">4. تنسيق السفر</h3>
+          <p class="lang-en">SEDAN airport pick-up, JCI scheduling, hotel stays.</p>
+          <p class="lang-ar">استقبال سيارة سيدان خاصة من المطار، تنسيق المستشفى، وحجز الفندق.</p>
+        </div>
+        <div class="process-card card-hover" data-reveal data-reveal-delay="200">
+          <div class="process-top">
+            <div class="process-number">5</div>
+          </div>
+          <h3 class="lang-en">5. Treatment &amp; Care</h3>
+          <h3 class="lang-ar">5. العلاج والرعاية</h3>
+          <p class="lang-en">Procedure and comprehensive return follow-up.</p>
+          <p class="lang-ar">إجراء العملية بنجاح ومتابعة شاملة بعد العودة إلى وطنك.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="testimonials" id="testimonials">
+  <!-- Section 6: Success Stories (Max 3) -->
+  <section class="testimonials" id="testimonials" style="padding: var(--section-py) 0;">
     <div class="container">
       <div class="section-title" data-reveal>
-        <h2>Trusted by Dubai Patients</h2>
-        <p>Real stories from international patients who chose Chennai for treatment.</p>
+        <h2 class="lang-en">Elite Patient Experiences</h2>
+        <h2 class="lang-ar">تجارب وقصص نجاح مرضانا</h2>
+        <p class="lang-en">Outstanding success stories and reviews from patients who traveled under our concierge care.</p>
+        <p class="lang-ar">قصص نجاح وتجارب ملهمة من مرضى سافروا لتلقي العلاج تحت إشرافنا المباشر.</p>
       </div>
       <div class="testimonial-grid">
-        <div class="testimonial-card card-hover" data-reveal data-reveal-delay="0">
-          <p>“The experience felt premium from consultation to treatment. Everything was professionally coordinated.”</p>
-          <h4>— Patient from Dubai</h4>
+        <div class="testimonial-card card-hover" data-reveal>
+          <div style="color: var(--gold); font-size: 20px; margin-bottom: 8px;">★★★★★</div>
+          <p class="lang-en">“Coordinated 4 implants and E-max veneers. The JCI clinic in India looked like a luxury lounge. Savings were over 65,000 AED compared to Dubai clinics!”</p>
+          <p class="lang-ar">“قمنا بتنسيق 4 زراعات أسنان وفينير إيماكس. كانت عيادة JCI في الهند أشبه بردهة فندقية فاخرة. وفرت أكثر من 65,000 درهم إماراتي مقارنة بعيادات دبي!”</p>
+          <h4 style="margin-top: 15px;" class="lang-en">— Tariq A., Dubai (Dental Rehab)</h4>
+          <h4 style="margin-top: 15px;" class="lang-ar">— طارق أ.، دبي (إعادة تأهيل الأسنان)</h4>
         </div>
-        <div class="testimonial-card card-hover" data-reveal data-reveal-delay="120">
-          <p>“I saved significantly compared to UAE pricing while receiving excellent treatment.”</p>
-          <h4>— Implant Patient</h4>
+        <div class="testimonial-card card-hover" data-reveal data-reveal-delay="80">
+          <div style="color: var(--gold); font-size: 20px; margin-bottom: 8px;">★★★★★</div>
+          <p class="lang-en">“Traveled to Chennai for robotic knee reconstruction. I walked comfortably within 4 days. Unmatched orthopaedic surgical talent.”</p>
+          <p class="lang-ar">“سافرت إلى تشيناي لإجراء جراحة روبوتية لإعادة بناء الركبة. تمكنت من المشي براحة خلال 4 أيام. كفاءة جراحية لا مثيل لها في طب العظام.”</p>
+          <h4 style="margin-top: 15px;" class="lang-en">— Salem M., Sharjah (Robotic Knee)</h4>
+          <h4 style="margin-top: 15px;" class="lang-ar">— سالم م.، الشارقة (استبدال الركبة الروبوتي)</h4>
         </div>
-        <div class="testimonial-card card-hover" data-reveal data-reveal-delay="240">
-          <p>“The planning before travelling gave me complete confidence and clarity.”</p>
-          <h4>— Smile Design Patient</h4>
+        <div class="testimonial-card card-hover" data-reveal data-reveal-delay="160">
+          <div style="color: var(--gold); font-size: 20px; margin-bottom: 8px;">★★★★★</div>
+          <p class="lang-en">“Empathetic IVF cycle coordination with advanced PGS testing. The embryology lab was incredible. Today we are holding our baby!”</p>
+          <p class="lang-ar">“تنسيق رعاية فائق لدورة أطفال الأنابيب مع فحص جيني متقدم للأجنة. كان مختبر الأجنة رائعاً للغاية. اليوم نحتضن طفلنا!”</p>
+          <h4 style="margin-top: 15px;" class="lang-en">— Amna K., Abu Dhabi (IVF &amp; ICSI)</h4>
+          <h4 style="margin-top: 15px;" class="lang-ar">— آمنة ك.، أبوظبي (أطفال الأنابيب)</h4>
         </div>
+      </div>
+      <div style="text-align: center; margin-top: 3rem;" data-reveal>
+        <a href="#consultation" class="btn btn-outline">
+          <span class="lang-en">View More Stories</span>
+          <span class="lang-ar">عرض المزيد من القصص</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <section class="cta" id="consultation">
+  <!-- Section 7: Lead Form -->
+  <section class="cta" id="consultation" style="padding: var(--section-py) 0;">
     <div class="container">
-      <h2 data-reveal>Book Your Free Consultation Before You Travel</h2>
-      <p data-reveal data-reveal-delay="80">Speak with our patient coordination team and understand your options before making any decision.</p>
-      <form id="leadForm" action="#" method="post" data-reveal data-reveal-delay="160">
-        <div class="form-grid">
-          <div>
-            <label class="form-label">Full Name</label>
-            <input type="text" name="name" placeholder="Your full name" required maxlength="100">
-          </div>
-          <div>
-            <label class="form-label">WhatsApp Number</label>
-            <input type="tel" name="whatsapp" placeholder="+971 ..." required maxlength="30">
-          </div>
-          <div>
-            <label class="form-label">Country</label>
-            <input type="text" name="country" placeholder="Country" value="United Arab Emirates" required maxlength="60">
-          </div>
-          <div>
-            <label class="form-label">Preferred Consultation Time</label>
-            <input type="text" name="time" placeholder="e.g. Weekdays evening (GST)" required maxlength="60">
-          </div>
-          <div class="full">
-            <label class="form-label">Treatment Needed</label>
-            <select name="treatment" required>
-              <option value="">Select treatment</option>
-              <option value="Dental Implant">Dental Implant</option>
-              <option value="Root Canal">Root Canal</option>
-              <option value="Smile Makeover">Smile Makeover</option>
-              <option value="Veneers">Veneers</option>
-              <option value="Full Mouth Rehabilitation">Full Mouth Rehabilitation</option>
-              <option value="Other / Not Sure">Other / Not Sure</option>
-            </select>
-          </div>
-          <div class="full">
-            <label class="form-label">Optional Report Upload</label>
-            <input type="file" name="file" accept=".pdf,.jpg,.jpeg,.png" style="background: rgba(255, 255, 255, 0.96); padding: 10px;">
-          </div>
-          <div class="full">
-            <button type="submit" class="btn btn-primary" id="submitBtn">Get Free Consultation</button>
-          </div>
+      <h2 data-reveal class="lang-en">Get Your Free Treatment Plan</h2>
+      <h2 data-reveal class="lang-ar">احصل على خطة علاج مجانية</h2>
+      <p data-reveal data-reveal-delay="80" class="lang-en">Receive a personalized treatment plan, estimated costs, and expert guidance from our patient coordinator.</p>
+      <p data-reveal data-reveal-delay="80" class="lang-ar">احصل على خطة علاج مخصصة، وتكاليف تقديرية، وإرشادات الخبراء من منسق المرضى لدينا.</p>
+      
+      <form id="consultationForm" class="consultation-form" novalidate data-reveal data-reveal-delay="160">
+        <input type="hidden" id="hiddenLocation" name="location" value="Dubai, UAE" />
+        <input type="hidden" id="hiddenLeadSource" name="leadSource" value="Website" />
+        <input type="hidden" id="hiddenLanguage" name="language" value="English" />
+        <input type="hidden" id="hiddenStatus" name="status" value="New Lead" />
+        
+        <div class="form-group">
+          <label for="fullName" class="form-label">
+            <span class="lang-en">Full Name *</span>
+            <span class="lang-ar">الاسم الكامل *</span>
+          </label>
+          <input id="fullName" name="fullName" type="text" placeholder="Enter Your Full Name" required />
         </div>
-        <p class="form-note">100% confidential · No spam · Reply within 24 hours</p>
+
+        <div class="form-group">
+          <label for="whatsapp" class="form-label">
+            <span class="lang-en">WhatsApp Number *</span>
+            <span class="lang-ar">رقم الواتساب *</span>
+          </label>
+          <input id="whatsapp" name="whatsapp" type="tel" placeholder="+971 XX XXX XXXX" required />
+        </div>
+
+        <div class="form-group">
+          <label for="datetime" class="form-label">
+            <span class="lang-en">Preferred Consultation Date & Time</span>
+            <span class="lang-ar">تاريخ ووقت الاستشارة المفضل</span>
+          </label>
+          <input id="datetime" name="datetime" type="datetime-local" placeholder="Select Preferred Date & Time" />
+        </div>
+
+        <div class="form-group">
+          <label for="category" class="form-label">
+            <span class="lang-en">Treatment Category *</span>
+            <span class="lang-ar">فئة العلاج *</span>
+          </label>
+          <select id="category" name="category" required>
+            <option value="" disabled selected>Select Category</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="treatment" class="form-label">
+            <span class="lang-en">Treatment Needed *</span>
+            <span class="lang-ar">العلاج المطلوب *</span>
+          </label>
+          <select id="treatment" name="treatment" required>
+            <option value="" disabled selected>Select Treatment</option>
+          </select>
+        </div>
+
+        <!-- Calculator container will be populated based on selected treatment -->
+        <div id="calculatorContainer"></div>
+
+        <div class="form-group">
+          <label for="notes" class="form-label">
+            <span class="lang-en">Additional Notes</span>
+            <span class="lang-ar">ملاحظات إضافية</span>
+          </label>
+          <textarea id="notes" name="notes" rows="4" placeholder="Tell us about your treatment needs or concerns."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="report" class="form-label">
+            <span class="lang-en">Upload Medical Reports (Optional)</span>
+            <span class="lang-ar">تحميل التقارير الطبية (اختياري)</span>
+          </label>
+          <input id="report" name="report" type="file" accept=".pdf,.jpg,.jpeg,.png,.docx" />
+          <p class="form-help-text lang-en">Upload scans, X-rays, medical reports, or treatment plans if available.</p>
+          <p class="form-help-text lang-ar">قم بتحميل صور الأشعة أو التحاليل أو التقارير الطبية أو خطط العلاج إذا كانت متوفرة.</p>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span class="lang-en">Get Free Treatment Plan</span>
+          <span class="lang-ar">احصل على خطة علاج مجانية</span>
+        </button>
       </form>
-      <div id="successMessage" style="display: none; text-align: center; padding: 40px; background: white; border-radius: 20px; max-width: 600px; margin: 60px auto 0;">
-        <div style="font-size: 40px; color: #d4af37; margin-bottom: 20px;">✓</div>
-        <h3 style="color: #0f172a; margin-bottom: 10px; font-size: 28px;">Thank you!</h3>
-        <p style="color: #64748b;">Our care coordinator will reach out within 24 hours on WhatsApp.</p>
+
+      <section class="trust-messages" data-reveal>
+        <ul>
+          <li>
+            <span class="lang-en">Free Medical Review</span>
+            <span class="lang-ar">مراجعة طبية مجانية</span>
+          </li>
+          <li>
+            <span class="lang-en">No Obligation</span>
+            <span class="lang-ar">بدون أي التزامات</span>
+          </li>
+          <li>
+            <span class="lang-en">Secure & Confidential</span>
+            <span class="lang-ar">آمن وسري للغاية</span>
+          </li>
+          <li>
+            <span class="lang-en">WhatsApp Response Within 24 Hours</span>
+            <span class="lang-ar">الرد عبر الواتساب خلال 24 ساعة</span>
+          </li>
+        </ul>
+      </section>
+
+      <div id="successMessage" class="success-box hidden" data-reveal>
+        <h2>Thank You!</h2>
+        <p>Your request has been submitted successfully.</p>
+        <p>Our patient coordinator will contact you on WhatsApp within 24 hours with treatment options, estimated costs, and next steps.</p>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer>
-    <div class="container">
-      <h3>DENTAL GLOBAL CARE</h3>
-      <p>Premium Dental Care for International Patients</p>
+    <div class="container" style="text-align: center; padding: 3rem 0; color: white;">
+      <h3 style="color: var(--gold); font-size: 1.5rem; margin-bottom: 10px;" class="lang-en">KèRa Wellness</h3>
+      <h3 style="color: var(--gold); font-size: 1.5rem; margin-bottom: 10px;" class="lang-ar">KèRa Wellness</h3>
+      <p style="color: #cccccc;" class="lang-en">Luxury Healthcare Concierge &amp; Medical Travel Coordination</p>
+      <p style="color: #cccccc;" class="lang-ar">التنسيق الطبي الفاخر وبوابة السفر العلاجي المتميز</p>
+      <p style="font-size: 0.75rem; color: #666666; margin-top: 2rem;" class="lang-en">© 2026 KèRa Wellness. All rights reserved. Partnered with JCI accredited clinical organizations.</p>
+      <p style="font-size: 0.75rem; color: #666666; margin-top: 2rem;" class="lang-ar">© 2026 KèRa Wellness. جميع الحقوق محفوظة. شركاء معتمدون طبيًا من منظمة JCI الدولية.</p>
     </div>
   </footer>
 
-  <a href="https://wa.me/971500000000" class="whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-    <span class="whatsapp-pulse" aria-hidden="true"></span>
-    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-  </a>
-
+  <!-- Script logic for calculator, selectors, callbacks and lead validation -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("leadForm");
-      const submitBtn = document.getElementById("submitBtn");
-      const successMessage = document.getElementById("successMessage");
+    // Re-designed dynamic savings calculator logic
+    const treatmentData = {
+      dental: [
+        {
+          key: "implant",
+          en: "Dental Implants",
+          ar: "زراعة الأسنان",
+          dubaiPrice: 8000,
+          indiaPrice: 2500,
+          qtyType: "implants",
+          qtyOptions: [1, 2, 4, 6, 8],
+          defaultQty: 4,
+          ctaType: "standard",
+          formOption: "Dental Implants"
+        },
+        {
+          key: "veneer",
+          en: "Porcelain Veneers",
+          ar: "فينير البورسلين",
+          dubaiPrice: 4150,
+          indiaPrice: 1400,
+          qtyType: "teeth",
+          qtyOptions: [4, 8, 10, 20],
+          defaultQty: 8,
+          ctaType: "standard",
+          formOption: "Cosmetic Dentistry"
+        },
+        {
+          key: "crown",
+          en: "Zirconia Crowns",
+          ar: "تيجان الزيركون",
+          dubaiPrice: 3000,
+          indiaPrice: 1400,
+          qtyType: "crowns",
+          qtyOptions: [1, 2, 4, 6, 8],
+          defaultQty: 4,
+          ctaType: "standard",
+          formOption: "Cosmetic Dentistry"
+        },
+        {
+          key: "rct",
+          en: "Root Canal Treatment",
+          ar: "علاج عصب الأسنان",
+          dubaiPrice: 3000,
+          indiaPrice: 900,
+          qtyType: "teeth_rct",
+          qtyOptions: [1, 2, 3],
+          defaultQty: 1,
+          ctaType: "standard",
+          formOption: "Cosmetic Dentistry"
+        },
+        {
+          key: "makeover",
+          en: "Smile Makeover",
+          ar: "تجميل الابتسامة الكامل",
+          dubaiPrice: 50000,
+          indiaPrice: 16500,
+          qtyType: "none",
+          ctaType: "makeover",
+          formOption: "Cosmetic Dentistry"
+        },
+        {
+          key: "whitening",
+          en: "Teeth Whitening",
+          ar: "تبييض الأسنان",
+          dubaiPrice: 2500,
+          indiaPrice: 1050,
+          qtyType: "none",
+          ctaType: "standard",
+          formOption: "Cosmetic Dentistry"
+        },
+        {
+          key: "invisalign",
+          en: "Invisalign",
+          ar: "تقويم إنفزلاين الشفاف",
+          dubaiPrice: 15000,
+          indiaPrice: 7000,
+          qtyType: "none",
+          ctaType: "standard",
+          formOption: "Cosmetic Dentistry"
+        }
+      ],
+      medical: [
+        {
+          key: "cardio",
+          en: "Heart Bypass (CABG)",
+          ar: "جراحة مجازة القلب",
+          dubaiPrice: 105000,
+          indiaPrice: 24000,
+          qtyType: "none",
+          ctaType: "medical",
+          formOption: "Heart Surgery"
+        },
+        {
+          key: "ortho",
+          en: "Knee Replacement",
+          ar: "استبدال مفصل الركبة",
+          dubaiPrice: 66000,
+          indiaPrice: 16500,
+          qtyType: "none",
+          ctaType: "medical",
+          formOption: "Knee Replacement"
+        },
+        {
+          key: "ivf",
+          en: "IVF & Fertility Treatment",
+          ar: "علاج أطفال الأنابيب والخصوبة",
+          dubaiPrice: 35000,
+          indiaPrice: 10000,
+          qtyType: "none",
+          ctaType: "medical",
+          formOption: "IVF & Fertility"
+        },
+        {
+          key: "oncology",
+          en: "Oncology Cancer Care",
+          ar: "علاج الأورام والسرطان",
+          dubaiPrice: 120000,
+          indiaPrice: 35000,
+          qtyType: "none",
+          ctaType: "medical",
+          formOption: "Other"
+        },
+        {
+          key: "neuro",
+          en: "Neurology Decompression",
+          ar: "عمليات تخفيف ضغط الأعصاب",
+          dubaiPrice: 9000,
+          indiaPrice: 2500,
+          qtyType: "none",
+          ctaType: "medical",
+          formOption: "Other"
+        },
+        {
+          key: "cosmetic",
+          en: "Cosmetic Surgery",
+          ar: "جراحة التجميل",
+          dubaiPrice: 40000,
+          indiaPrice: 12000,
+          qtyType: "none",
+          ctaType: "medical",
+          formOption: "Cosmetic Dentistry"
+        },
+        {
+          key: "bariatric",
+          en: "Bariatric Bypass",
+          ar: "جراحة السمنة وتكميم المعدة",
+          dubaiPrice: 45000,
+          indiaPrice: 14000,
+          qtyType: "none",
+          ctaType: "medical",
+          formOption: "Other"
+        },
+        {
+          key: "transplant",
+          en: "Organ Transplant",
+          ar: "عمليات زراعة الأعضاء",
+          dubaiPrice: 250000,
+          indiaPrice: 85000,
+          qtyType: "none",
+          ctaType: "medical",
+          formOption: "Other"
+        },
+        {
+          key: "spine",
+          en: "Spine Surgery",
+          ar: "جراحة العمود الفقري",
+          dubaiPrice: 75000,
+          indiaPrice: 20000,
+          qtyType: "none",
+          ctaType: "medical",
+          formOption: "Other"
+        }
+      ]
+    };
 
-      if (form) {
-        form.addEventListener("submit", (e) => {
-          e.preventDefault();
-          submitBtn.disabled = true;
-          submitBtn.textContent = "Submitting...";
-          
-          // In a real app we'd fetch/save lead here with `new FormData(form)` logic
-          // Simulating the saveLead delay behavior
-          setTimeout(() => {
-            form.style.display = "none";
-            successMessage.style.display = "block";
-          }, 500);
+    let activeCategory = "dental";
+
+    function setCalcCategory(cat) {
+      activeCategory = cat;
+      
+      // Update button visual state
+      const btnDental = document.getElementById("catBtnDental");
+      const btnMedical = document.getElementById("catBtnMedical");
+      
+      if (cat === "dental") {
+        if (btnDental) btnDental.classList.add("active");
+        if (btnMedical) btnMedical.classList.remove("active");
+      } else {
+        if (btnDental) btnDental.classList.remove("active");
+        if (btnMedical) btnMedical.classList.add("active");
+      }
+      
+      rebuildTreatmentDropdowns();
+      
+      // Rebuild quantity options with default first treatment
+      const list = treatmentData[activeCategory];
+      if (list.length > 0) {
+        // Set dropdown selections to first item
+        const enSelect = document.getElementById("calcTreatment");
+        const arSelect = document.getElementById("calcTreatmentAr");
+        if (enSelect && arSelect) {
+          enSelect.value = list[0].key;
+          arSelect.value = list[0].key;
+        }
+        updateQuantityField(list[0]);
+        const currentQtySelect = document.getElementById("calcQtySelect");
+        if (currentQtySelect) {
+          currentQtySelect.setAttribute("data-treatment", list[0].key);
+        }
+      }
+      
+      runCalculation();
+    }
+
+    function rebuildTreatmentDropdowns() {
+      const enSelect = document.getElementById("calcTreatment");
+      const arSelect = document.getElementById("calcTreatmentAr");
+      if (!enSelect || !arSelect) return;
+      
+      enSelect.innerHTML = "";
+      arSelect.innerHTML = "";
+      
+      const list = treatmentData[activeCategory];
+      list.forEach(t => {
+        const optEn = document.createElement("option");
+        optEn.value = t.key;
+        optEn.textContent = t.en;
+        enSelect.appendChild(optEn);
+        
+        const optAr = document.createElement("option");
+        optAr.value = t.key;
+        optAr.textContent = t.ar;
+        arSelect.appendChild(optAr);
+      });
+    }
+
+    function updateQuantityField(treatment) {
+      const wrapper = document.getElementById("calcQtyWrapper");
+      const qtySelect = document.getElementById("calcQtySelect");
+      const label = document.getElementById("calcQtyLabel");
+      if (!wrapper || !qtySelect) return;
+      
+      if (treatment.qtyType === "none") {
+        wrapper.classList.add("hidden");
+        return;
+      }
+      
+      wrapper.classList.remove("hidden");
+      
+      // Update label text
+      if (label) {
+        if (treatment.qtyType === "implants") {
+          label.innerHTML = `<span class="lang-en">Number of Implants</span><span class="lang-ar">عدد الغرسات</span>`;
+        } else if (treatment.qtyType === "teeth" || treatment.qtyType === "teeth_rct") {
+          label.innerHTML = `<span class="lang-en">Number of Teeth</span><span class="lang-ar">عدد الأسنان</span>`;
+        } else if (treatment.qtyType === "crowns") {
+          label.innerHTML = `<span class="lang-en">Number of Crowns</span><span class="lang-ar">عدد التيجان</span>`;
+        }
+      }
+      
+      // Rebuild options
+      qtySelect.innerHTML = "";
+      treatment.qtyOptions.forEach(opt => {
+        const option = document.createElement("option");
+        option.value = opt;
+        option.textContent = opt;
+        qtySelect.appendChild(option);
+      });
+      
+      qtySelect.value = treatment.defaultQty;
+    }
+
+    function runCalculation() {
+      const isAr = document.documentElement.getAttribute('lang') === 'ar';
+      const selectId = isAr ? "calcTreatmentAr" : "calcTreatment";
+      const selectElem = document.getElementById(selectId);
+      if (!selectElem) return;
+      
+      const treatmentKey = selectElem.value;
+      const list = treatmentData[activeCategory];
+      const treatment = list.find(t => t.key === treatmentKey);
+      if (!treatment) return;
+      
+      // Rebuild quantity options if treatment changes
+      const qtyWrapper = document.getElementById("calcQtyWrapper");
+      const currentQtySelect = document.getElementById("calcQtySelect");
+      
+      if (treatment.qtyType !== "none") {
+        if (currentQtySelect && currentQtySelect.getAttribute("data-treatment") !== treatmentKey) {
+          updateQuantityField(treatment);
+          currentQtySelect.setAttribute("data-treatment", treatmentKey);
+        } else if (qtyWrapper && qtyWrapper.classList.contains("hidden")) {
+          updateQuantityField(treatment);
+          if (currentQtySelect) currentQtySelect.setAttribute("data-treatment", treatmentKey);
+        }
+      } else {
+        if (qtyWrapper && !qtyWrapper.classList.contains("hidden")) {
+          updateQuantityField(treatment);
+        }
+      }
+      
+      const qty = treatment.qtyType === "none" ? 1 : (parseInt(document.getElementById("calcQtySelect").value) || 1);
+      
+      const dubaiCost = treatment.dubaiPrice * qty;
+      const indiaCost = treatment.indiaPrice * qty;
+      const savings = dubaiCost - indiaCost;
+      const savingsPct = Math.round((savings / dubaiCost) * 100);
+      
+      // Render outputs
+      const resDubai = document.getElementById("resDubaiPrice");
+      const resIndia = document.getElementById("resIndiaPrice");
+      const resSavings = document.getElementById("resSavingsAmt");
+      
+      if (resDubai) resDubai.textContent = "AED " + dubaiCost.toLocaleString();
+      if (resIndia) resIndia.textContent = "AED " + indiaCost.toLocaleString();
+      
+      if (resSavings) {
+        if (isAr) {
+          resSavings.textContent = "AED " + savings.toLocaleString() + " (وفر " + savingsPct + "%)";
+        } else {
+          resSavings.textContent = "AED " + savings.toLocaleString() + " (" + savingsPct + "% Saved)";
+        }
+      }
+      
+      // Progress bars
+      const barDubai = document.getElementById("resDubaiBar");
+      const barIndia = document.getElementById("resIndiaBar");
+      if (barDubai) barDubai.style.width = "100%";
+      if (barIndia) barIndia.style.width = Math.max(15, Math.round((indiaCost / dubaiCost) * 100)) + "%";
+      
+      // Update dynamic CTAs
+      updateCTA(treatment);
+    }
+
+    function updateCTA(treatment) {
+      const ctaBtn = document.getElementById("calcCtaBtn") || document.querySelector(".savings-card .btn-primary");
+      if (!ctaBtn) return;
+      
+      ctaBtn.innerHTML = "";
+      
+      if (treatment.ctaType === "makeover") {
+        ctaBtn.innerHTML = `<span class="lang-en">Get Exact Treatment Plan</span><span class="lang-ar">احصل على خطة علاج دقيقة</span>`;
+      } else if (treatment.ctaType === "medical") {
+        ctaBtn.innerHTML = `<span class="lang-en">Get Personalized Treatment Plan</span><span class="lang-ar">احصل على خطة علاجية مخصصة</span>`;
+      } else {
+        ctaBtn.innerHTML = `<span class="lang-en">Get Free Treatment Plan</span><span class="lang-ar">احصل على خطة علاج مجانية</span>`;
+      }
+    }
+
+    function setFormTreatmentAndScroll(e) {
+      if (e) e.preventDefault();
+      setFormTreatment();
+      
+      // Smooth scroll
+      const ctaSection = document.getElementById("consultation");
+      if (ctaSection) {
+        ctaSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function setFormTreatment() {
+      const isAr = document.documentElement.getAttribute('lang') === 'ar';
+      const selectId = isAr ? "calcTreatmentAr" : "calcTreatment";
+      const selectElem = document.getElementById(selectId);
+      if (!selectElem) return;
+      
+      const treatmentKey = selectElem.value;
+      const list = treatmentData[activeCategory];
+      const treatment = list.find(t => t.key === treatmentKey);
+      if (!treatment) return;
+      
+      const formSel = document.getElementById("formTreatment");
+      const formSelAr = document.getElementById("formTreatmentAr");
+      
+      if (formSel && treatment.formOption) {
+        // Select matching option in English form dropdown
+        for (let i = 0; i < formSel.options.length; i++) {
+          if (formSel.options[i].text.includes(treatment.formOption) || formSel.options[i].value.includes(treatment.formOption)) {
+            formSel.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      
+      if (formSelAr && treatment.formOption) {
+        // Select matching option in Arabic form dropdown
+        for (let i = 0; i < formSelAr.options.length; i++) {
+          if (formSelAr.options[i].value.includes(treatment.formOption)) {
+            formSelAr.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+    // Sync dropdown changes between EN/AR selects
+    document.addEventListener("DOMContentLoaded", () => {
+      const enSelect = document.getElementById("calcTreatment");
+      const arSelect = document.getElementById("calcTreatmentAr");
+      if (enSelect && arSelect) {
+        enSelect.addEventListener("change", (e) => {
+          arSelect.value = e.target.value;
+          runCalculation();
+        });
+        arSelect.addEventListener("change", (e) => {
+          enSelect.value = e.target.value;
+          runCalculation();
         });
       }
     });
+
+    // Modal Callback Logic
+    const modal = document.getElementById("callbackModal");
+    const closeBtn = document.getElementById("closeCallbackBtn");
+    const callbackForm = document.getElementById("modalCallbackForm");
+    const modalSuccess = document.getElementById("modalSuccess");
+
+    // Wire up Mobile Bottom Sticky Bar's Free Consultation CTA
+    const mobileCallbackTrigger = document.getElementById("mobileCallbackTrigger");
+    if (mobileCallbackTrigger) {
+      mobileCallbackTrigger.addEventListener("click", () => {
+        modal.classList.add("active");
+        modalSuccess.style.display = "none";
+        callbackForm.style.display = "block";
+      });
+    }
+
+    // Support openCallbackBtn (desktop FAB is hidden via CSS, but trigger remains in DOM)
+    const openBtn = document.getElementById("openCallbackBtn");
+    if (openBtn) {
+      openBtn.addEventListener("click", () => {
+        modal.classList.add("active");
+        modalSuccess.style.display = "none";
+        callbackForm.style.display = "block";
+      });
+    }
+
+    closeBtn.addEventListener("click", () => {
+      modal.classList.remove("active");
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.remove("active");
+      }
+    });
+
+    callbackForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      modalSuccess.style.display = "block";
+      callbackForm.style.display = "none";
+      setTimeout(() => {
+        modal.classList.remove("active");
+      }, 2000);
+    });
+    // Force play background video to prevent browser autoplay blocks
+    document.addEventListener("DOMContentLoaded", () => {
+      const video = document.getElementById("heroVideo");
+      if (video && video.querySelector("source")) {
+        video.play().catch(err => {
+          console.log("Autoplay blocked. Registering interaction trigger.", err);
+          const playOnInteraction = () => {
+            video.play();
+            document.removeEventListener("click", playOnInteraction);
+            document.removeEventListener("touchstart", playOnInteraction);
+          };
+          document.addEventListener("click", playOnInteraction);
+          document.addEventListener("touchstart", playOnInteraction);
+        });
+      }
+      
+      // Initialize calculation once by setting category to dental
+      setCalcCategory('dental');
+    });
   </script>
-  <script src="/assets/js/scroll-reveal.js" defer></script>
+  <!-- WhatsApp Floating FAB -->
+  <a href="https://wa.me/971500000000" class="whatsapp" target="_blank" rel="noopener noreferrer"
+    aria-label="Chat with a Coordinator on WhatsApp">
+    <span class="whatsapp-pulse" aria-hidden="true"></span>
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
+
+  <script src="assets/form.js"></script>
+  <script src="./assets/js/scroll-reveal.js" defer></script>
 </body>
+
 </html>

@@ -1,0 +1,120 @@
+/* Premium Consultation Form Styles */
+/* Mobile‑first, clean, high‑conversion */
+
+:root {
+  --gold: #B08D57;
+  --text: #000000;
+  --bg: #ffffff;
+  --radius: 8px;
+  --input-height: 48px;
+  --font-family: 'Inter', sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  text-align: center;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.consultation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.consultation-form input[type="text"],
+.consultation-form input[type="tel"],
+.consultation-form input[type="datetime-local"],
+.consultation-form select,
+.consultation-form textarea,
+.consultation-form input[type="file"] {
+  width: 100%;
+  height: var(--input-height);
+  padding: 0 1rem;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  background: #fafafa;
+}
+
+.consultation-form textarea {
+  height: auto;
+  min-height: 120px;
+  padding: 0.75rem 1rem;
+}
+
+.consultation-form input::placeholder,
+.consultation-form textarea::placeholder {
+  color: #888;
+}
+
+.consultation-form button.submit-btn {
+  height: var(--input-height);
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.consultation-form button.submit-btn:hover {
+  background: #9a764c;
+}
+
+.trust-messages ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.trust-messages li::before {
+  content: "✓ ";
+  color: var(--gold);
+}
+
+.success {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.hidden { display: none; }
+
+/* Focus styles for accessibility */
+.consultation-form input:focus,
+.consultation-form select:focus,
+.consultation-form textarea:focus,
+.consultation-form button:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}

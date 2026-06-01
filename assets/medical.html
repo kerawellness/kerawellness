@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title class="lang-en">Premium Medical Specialties in India | Save up to 70% | KèRa Wellness</title>
+  <title class="lang-ar">تخصصات طبية متميزة في الهند | وفر حتى 70% | KèRa Wellness</title>
+  <meta name="description"
+    content="High-quality cardiology, orthopedics, cancer care, and IVF in India for UAE residents. Accredited JCI partner clinics, US/UK-trained surgeons.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
+  <script src="./js/language-switch.js"></script>
+  <style>
+    body {
+      background: var(--white);
+      color: var(--text-dark);
+    }
+    nav {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1.5px solid rgba(var(--gold-rgb), 0.3);
+    }
+    .treatment-hero {
+      position: relative;
+      color: white;
+      padding-top: clamp(6.25rem, 12vw, 8.75rem);
+      min-height: 70svh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: transparent !important;
+    }
+    .video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .video-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      filter: saturate(0.95) contrast(1.05);
+      transition: opacity 0.8s ease;
+    }
+    .video-background video.is-loaded {
+      opacity: 1;
+    }
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(17, 17, 17, 0.45);
+      z-index: 2;
+    }
+    .treatment-hero .container {
+      position: relative;
+      z-index: 3;
+    }
+    .treatment-hero h1 {
+      color: white;
+    }
+    .treatment-hero p {
+      color: rgba(255, 255, 255, 0.82);
+    }
+    .hero-badge {
+      background: rgba(17, 17, 17, 0.52);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .benefit-card {
+      background: var(--bg-secondary);
+      border: 1.5px solid rgba(var(--gold-rgb), 0.2);
+    }
+    .benefit-card h3 {
+      color: var(--black);
+    }
+    .benefit-card p {
+      color: var(--text-muted);
+    }
+    .cta {
+      background: linear-gradient(to right, rgba(255,255,255,0.92), rgba(255,255,255,0.98)),
+                  url("https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=2200&auto=format&fit=crop") center/cover no-repeat;
+      color: var(--text-dark);
+    }
+    .cta h2 {
+      color: var(--black);
+    }
+    .cta p {
+      color: var(--text-muted);
+    }
+    form {
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--gold);
+    }
+    .form-label {
+      color: var(--black);
+    }
+    input, select, textarea {
+      border: 1px solid rgba(var(--gold-rgb), 0.4);
+    }
+    .form-note {
+      color: var(--text-muted);
+    }
+    footer {
+      background: var(--black);
+      border-top: 2px solid var(--gold);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating Consultation Callback Trigger (Hidden via CSS, but trigger remains in DOM) -->
+  <button class="floating-callback-btn" id="openCallbackBtn" aria-label="Request Instant Callback">
+    <svg fill="currentColor" viewBox="0 0 24 24">
+      <path d="M6.62 10.79a15.15 15.15 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.11-.27 11.36 11.36 0 0 0 3.58.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.58 1 1 0 0 1-.27 1.11z"/>
+    </svg>
+  </button>
+
+  <!-- Instant Callback Modal -->
+  <div class="callback-modal" id="callbackModal">
+    <div class="callback-modal-content">
+      <button class="callback-modal-close" id="closeCallbackBtn" aria-label="Close modal">&times;</button>
+      <h3 class="lang-en">Instant VIP Callback</h3>
+      <h3 class="lang-ar">اتصال فوري لكبار الشخصيات</h3>
+      <p class="lang-en">Enter your details below. A dedicated healthcare coordinator will call you back on WhatsApp within 15 minutes.</p>
+      <p class="lang-ar">أدخل بياناتك أدناه. سيتصل بك منسق رعاية صحية مخصص على واتساب في غضون 15 دقيقة.</p>
+      <form id="modalCallbackForm">
+        <input type="text" name="name" class="lang-en" placeholder="Your Name" required>
+        <input type="text" name="name_ar" class="lang-ar" placeholder="الاسم الكامل" required>
+        <input type="tel" name="phone" placeholder="WhatsApp Number (e.g. +971...)" required>
+        <button type="submit" class="btn btn-primary" style="width: 100%; background: var(--black); color: var(--gold); border-color: var(--black);">
+          <span class="lang-en">Request Callback Now</span>
+          <span class="lang-ar">طلب اتصال الآن</span>
+        </button>
+      </form>
+      <div id="modalSuccess" style="display: none; color: #16a34a; margin-top: 15px; font-weight: 700;">
+        <span class="lang-en">✓ Request received! We will call you shortly.</span>
+        <span class="lang-ar">✓ تم استلام الطلب! سنتصل بك قريبًا.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persistent Mobile Bottom Sticky CTA -->
+  <div class="mobile-sticky-cta">
+    <a href="https://wa.me/971500000000" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
+      <span class="lang-en">WhatsApp</span>
+      <span class="lang-ar">واتساب</span>
+    </a>
+    <button class="btn btn-primary" id="mobileCallbackTrigger" style="background: var(--black); color: var(--gold); border-color: var(--black);">
+      <span class="lang-en">Free Consultation</span>
+      <span class="lang-ar">استشارة مجانية</span>
+    </button>
+  </div>
+
+  <nav>
+    <div class="container nav-wrapper">
+      <a href="../index.html" class="logo" style="color: var(--black);">KèRa Wellness<span style="color: var(--gold);">.</span></a>
+      <div class="nav-links">
+        <div class="lang-switcher">
+          <button onclick="setLanguage('en')" class="lang-btn btn-lang-en active" id="btn-lang-en">EN</button>
+          <span>|</span>
+          <button onclick="setLanguage('ar')" class="lang-btn btn-lang-ar" id="btn-lang-ar">عربي</button>
+        </div>
+        <a href="../index.html" class="lang-en">Home</a>
+        <a href="../index.html" class="lang-ar">الرئيسية</a>
+        <a href="dental.html" class="lang-en">Dental</a>
+        <a href="dental.html" class="lang-ar">طب الأسنان</a>
+        <a href="medical.html" class="lang-en">Medical</a>
+        <a href="medical.html" class="lang-ar">الطب العام</a>
+        <a href="../index.html#journey" class="lang-en">Patient Journey</a>
+        <a href="../index.html#journey" class="lang-ar">رحلة المريض</a>
+        <a href="#testimonials" class="lang-en">Success Stories</a>
+        <a href="#testimonials" class="lang-ar">قصص النجاح</a>
+      </div>
+      <button class="burger-menu-btn" id="burgerMenuBtn" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Treatment Hero Section -->
+  <section class="treatment-hero cardiac">
+    <div class="video-background">
+      <video autoplay muted loop playsinline preload="auto" id="heroVideo" aria-hidden="true">
+        <source src="/assets/videos/medical.mp4" type="video/mp4">
+      </video>
+      <div class="video-overlay"></div>
+    </div>
+    <div class="container">
+      <div class="treatment-hero-content" data-reveal style="position: relative; z-index: 3;">
+        <div class="hero-badge">
+          <span class="lang-en">Accredited Multi-Specialty Concierge</span>
+          <span class="lang-ar">تنسيق طبي متعدد التخصصات معتمد</span>
+        </div>
+        <h1>
+          <span class="lang-en">Advanced Medical Care With International Standards</span>
+          <span class="lang-ar">رعاية طبية متقدمة بمعايير دولية</span>
+        </h1>
+        <p class="lang-en">Overcome delayed elective procedures. Undergo advanced cardiac, orthopaedic, oncological, and IVF treatments inside leading Tier-1 JCI partner corporate hospitals in India.</p>
+        <p class="lang-ar">تغلب على قوائم الانتظار الطويلة للعمليات الجراحية الاختيارية. خضع لعلاجات متقدمة في مجالات القلب والعظام والأورام وأطفال الأنابيب في أبرز المستشفيات الشريكة الحاصلة على اعتماد JCI الدولي بالهند.</p>
+        <div class="hero-buttons">
+          <a href="#consultation" class="btn btn-primary" style="background: var(--black); color: var(--gold); border-color: var(--black);">
+            <span class="lang-en">Get Free Treatment Plan</span>
+            <span class="lang-ar">احصل على خطة علاج مجانية</span>
+          </a>
+          <a href="https://wa.me/971500000000" class="btn btn-outline">
+            <span class="lang-en">WhatsApp Specialist</span>
+            <span class="lang-ar">تحدث مع أخصائي على واتساب</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Specialties Grid -->
+  <section id="specialties" style="background: var(--white); padding: var(--section-py) 0;">
+    <div class="container">
+      <div class="section-title" data-reveal>
+        <h2 class="lang-en">Elite Medical Specialties</h2>
+        <h2 class="lang-ar">التخصصات الطبية الممتازة</h2>
+        <p class="lang-en">State-of-the-art procedures executed by highly acclaimed clinical chief surgeons.</p>
+        <p class="lang-ar">إجراءات طبية وجراحية متطورة على أيدي نخبة من رؤساء الأقسام الجراحية المرموقين.</p>
+      </div>
+
+      <div class="treatment-benefits-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <div class="benefit-card card-hover" data-reveal id="cardiology">
+          <div style="font-size: 24px; margin-bottom: 8px;">❤️</div>
+          <h3 class="lang-en">Cardiology &amp; CABG</h3>
+          <h3 class="lang-ar">أمراض وجراحة القلب</h3>
+          <p class="lang-en">Heart bypass surgery (CABG), valve replacements, and minimally invasive robotic cardiac procedures.</p>
+          <p class="lang-ar">عمليات مجازة الشريان التاجي (CABG)، استبدال صمامات القلب، وإجراءات القلب الروبوتية طفيفة التوغل.</p>
+        </div>
+        <div class="benefit-card card-hover" data-reveal data-reveal-delay="40" id="ortho">
+          <div style="font-size: 24px; margin-bottom: 8px;">🦴</div>
+          <h3 class="lang-en">Orthopedics &amp; Joints</h3>
+          <h3 class="lang-ar">جراحة العظام والمفاصل</h3>
+          <p class="lang-en">Robotic-assisted total knee replacements and hip reconstructions with Stryker / Zimmer structures.</p>
+          <p class="lang-ar">عمليات استبدال مفصل الركبة وإعادة بناء الفخذ بمساعدة الروبوت باستخدام تقنيات Stryker و Zimmer.</p>
+        </div>
+        <div class="benefit-card card-hover" data-reveal data-reveal-delay="80" id="oncology">
+          <div style="font-size: 24px; margin-bottom: 8px;">🎗️</div>
+          <h3 class="lang-en">Oncology &amp; Cancer Care</h3>
+          <h3 class="lang-ar">علاج الأورام والسرطان</h3>
+          <p class="lang-en">Advanced chemotherapy, proton beam radiation, immunotherapy, and precision cancer tumor removals.</p>
+          <p class="lang-ar">العلاج الكيميائي المتقدم، العلاج الإشعاعي بالبروتونات، العلاج المناعي، واستئصال الأورام بدقة عالية.</p>
+        </div>
+        <div class="benefit-card card-hover" data-reveal data-reveal-delay="120" id="ivf">
+          <div style="font-size: 24px; margin-bottom: 8px;">🍼</div>
+          <h3 class="lang-en">IVF &amp; Fertility Care</h3>
+          <h3 class="lang-ar">أطفال الأنابيب وتنشيط الخصوبة</h3>
+          <p class="lang-en">Advanced ICSI cycles, embryological blastocyst cultures, and PGS/PGD pre-implantation genetic screening.</p>
+          <p class="lang-ar">دورات حقن مجهري (ICSI) متقدمة، زراعة الأجنة بمرحلة الكيسة الأريمية، والفحص الوراثي قبل الانغراس (PGS/PGD).</p>
+        </div>
+        <div class="benefit-card card-hover" data-reveal data-reveal-delay="160" id="neurology">
+          <div style="font-size: 24px; margin-bottom: 8px;">🧠</div>
+          <h3 class="lang-en">Neurology &amp; Neurosurgery</h3>
+          <h3 class="lang-ar">طب وجراحة الأعصاب</h3>
+          <p class="lang-en">Brain surgery, deep brain stimulation (DBS), and complex spine decompression procedures.</p>
+          <p class="lang-ar">جراحات الدماغ، التحفيز العميق للدماغ (DBS)، وعمليات إزالة الضغط المعقدة عن العمود الفقري.</p>
+        </div>
+        <div class="benefit-card card-hover" data-reveal data-reveal-delay="200" id="cosmeticsurg">
+          <div style="font-size: 24px; margin-bottom: 8px;">⚡</div>
+          <h3 class="lang-en">Cosmetic Surgery</h3>
+          <h3 class="lang-ar">جراحة التجميل</h3>
+          <p class="lang-en">Premium aesthetics, rhinoplasties, breast revisions, liposuctions, and complete body contouring.</p>
+          <p class="lang-ar">إجراءات تجميلية متميزة، تجميل الأنف، ترميم الثدي، شفط الدهون، وتنسيق القوام بالكامل.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Cost Calculator -->
+  <section class="savings-calc" style="background: #fbfbfb; padding: var(--section-py) 0;">
+    <div class="container">
+      <div class="section-title" data-reveal>
+        <h2 class="lang-en">Medical Cost Calculator</h2>
+        <h2 class="lang-ar">حاسبة التكلفة الطبية</h2>
+        <p class="lang-en">Select your required medical treatment to calculate estimated cost savings in AED instantly.</p>
+        <p class="lang-ar">اختر العلاج الطبي المطلوب لحساب التوفير المالي التقديري بالدرهم الإماراتي فوراً.</p>
+      </div>
+
+      <div class="calc-container" data-reveal style="max-width: 960px;">
+        <div class="calc-field-group">
+          <div class="calc-field-item">
+            <label>
+              <span class="lang-en">Select Treatment</span>
+              <span class="lang-ar">اختر العلاج</span>
+            </label>
+            <select id="calcTreatment" class="lang-en" onchange="runCalculation()">
+              <option value="cardio" selected>Cardiology CABG Surgery</option>
+              <option value="ortho">Knee Joint Replacement</option>
+              <option value="oncology">Oncology Cancer Care</option>
+              <option value="ivf">IVF Fertility Cycle</option>
+              <option value="neuro">Neurology Decompression</option>
+              <option value="cosmetic">Cosmetic Surgery</option>
+              <option value="bariatric">Bariatric Bypass</option>
+              <option value="transplant">Organ Transplant</option>
+              <option value="spine">Spine Surgery</option>
+            </select>
+            <select id="calcTreatmentAr" class="lang-ar" onchange="runCalculation()">
+              <option value="cardio" selected>جراحة مجازة الشريان التاجي (القلب)</option>
+              <option value="ortho">جراحة استبدال مفصل الركبة</option>
+              <option value="oncology">علاج الأورام والسرطان</option>
+              <option value="ivf">دورة أطفال الأنابيب وتنشيط الخصوبة</option>
+              <option value="neuro">عمليات تخفيف ضغط الأعصاب</option>
+              <option value="cosmetic">جراحة التجميل</option>
+              <option value="bariatric">جراحة السمنة وتكميم المعدة</option>
+              <option value="transplant">عمليات زراعة الأعضاء</option>
+              <option value="spine">جراحة العمود الفقري</option>
+            </select>
+          </div>
+          <div class="calc-field-item">
+            <label>
+              <span class="lang-en">Country (From)</span>
+              <span class="lang-ar">بلد الإقامة</span>
+            </label>
+            <select id="calcCountry" class="lang-en">
+              <option value="UAE" selected>United Arab Emirates</option>
+            </select>
+            <select id="calcCountryAr" class="lang-ar">
+              <option value="UAE" selected>الإمارات العربية المتحدة</option>
+            </select>
+          </div>
+          <div class="calc-field-item">
+            <label>
+              <span class="lang-en">Quantity</span>
+              <span class="lang-ar">الكمية</span>
+            </label>
+            <input type="number" id="calcQty" value="1" min="1" max="10" oninput="runCalculation()">
+          </div>
+          <div class="calc-field-item">
+            <button class="calc-btn-full" onclick="runCalculation()">
+              <span class="lang-en">Calculate Savings</span>
+              <span class="lang-ar">احسب التوفير</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="calc-result-wrapper" style="border-top: 1px solid rgba(var(--gold-rgb), 0.2); padding-top: 2rem;">
+          <div class="comparison-bars">
+            <div class="bar-item">
+              <div class="bar-label">
+                <span class="lang-en">Dubai / UAE Average Cost</span>
+                <span class="lang-ar">متوسط التكلفة في دبي / الإمارات</span>
+                <span id="resDubaiPrice" style="color: #ea580c; font-weight:800;">AED 105,000</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill dubai" id="resDubaiBar" style="width: 100%; background: #ea580c;"></div>
+              </div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-label">
+                <span class="lang-en">India Premier Package Cost</span>
+                <span class="lang-ar">تكلفة باقة الهند الممتازة</span>
+                <span id="resIndiaPrice" style="color: var(--black); font-weight:800;">AED 24,000</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill india" id="resIndiaBar" style="width: 22.8%; background: linear-gradient(90deg, var(--gold-dark), var(--gold));"></div>
+              </div>
+            </div>
+          </div>
+          <div class="savings-card">
+            <h4 class="lang-en">Estimated Savings</h4>
+            <h4 class="lang-ar">التوفير التقديري</h4>
+            <div class="savings-amount" id="resSavingsAmt" style="color: var(--gold);">AED 81,000</div>
+            <a href="#consultation" class="btn btn-primary" onclick="setFormTreatment()" style="margin-top: 1rem; width: 100%; background: var(--black); color: var(--gold); border-color: var(--black);">
+              <span class="lang-en">Get Detailed Quote</span>
+              <span class="lang-ar">احصل على عرض سعر مفصل</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Patient Stories -->
+  <section class="testimonials" id="testimonials" style="background: var(--white); padding: var(--section-py) 0;">
+    <div class="container">
+      <div class="section-title" data-reveal>
+        <h2 class="lang-en">Elite Patient Recovery Stories</h2>
+        <h2 class="lang-ar">قصص شفاء مرضانا المميزين</h2>
+        <p class="lang-en">Read detailed medical tourism cases from patients who experienced our coordinated clinical care.</p>
+        <p class="lang-ar">اقرأ قصص وتفاصيل حالات السفر الطبي لمرضانا الذين تلقوا رعاية سريرية منسقة بالكامل.</p>
+      </div>
+
+      <div class="testimonial-grid" style="grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+        <div class="testimonial-card card-hover" data-reveal>
+          <div style="color: var(--gold); font-size: 20px; margin-bottom: 8px;">★★★★★</div>
+          <h3 class="lang-en">Coronary Bypass (CABG)</h3>
+          <h3 class="lang-ar">عملية مجازة الشريان التاجي (القلب)</h3>
+          <p class="lang-en">“When Dubai pricing for heart surgery was out of reach, KèRa Wellness organized my Angiography review, immediate visa, and a private JCI-accredited cardiac suite. The surgery was exceptionally successful.”</p>
+          <p class="lang-ar">“عندما كانت تكلفة جراحة القلب في دبي تفوق إمكانياتي، نظمت KèRa Wellness مراجعة تصوير الشرايين، وحصلت على تأشيرة فورية، وجناح قلب خاص في مستشفى معتمد من JCI. كانت الجراحة ناجحة للغاية.”</p>
+          <h4 style="margin-top: 15px;" class="lang-en">— John D., Abu Dhabi</h4>
+          <h4 style="margin-top: 15px;" class="lang-ar">— جون د.، أبو ظبي</h4>
+        </div>
+        <div class="testimonial-card card-hover" data-reveal data-reveal-delay="80">
+          <div style="color: var(--gold); font-size: 20px; margin-bottom: 8px;">★★★★★</div>
+          <h3 class="lang-en">Discreet IVF Stimulation Cycle</h3>
+          <h3 class="lang-ar">دورة تنشيط وتلقيح مجهري سرية (IVF)</h3>
+          <p class="lang-en">“Coordinating stimulations locally in the UAE and retrieval in India saved us massive stress. The embryology JCI standards were perfect, and PGS screening succeeded on attempt one!”</p>
+          <p class="lang-ar">“تنسيق مراحل التنشيط محلياً في الإمارات وسحب البويضات في الهند وفر علينا ضغوطاً هائلة. كانت معايير أجنة JCI ممتازة، ونجح الفحص الجيني للأجنة من المحاولة الأولى!”</p>
+          <h4 style="margin-top: 15px;" class="lang-en">— Amna K., Dubai</h4>
+          <h4 style="margin-top: 15px;" class="lang-ar">— آمنة ك.، دبي</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: FAQ Accordion -->
+  <section style="background: #fbfbfb; padding: var(--section-py) 0;">
+    <div class="container">
+      <div class="section-title" data-reveal>
+        <h2 class="lang-en">Medical Travel FAQs</h2>
+        <h2 class="lang-ar">الأسئلة الشائعة حول السفر الطبي</h2>
+        <p class="lang-en">Essential details regarding medical visas, hospital certifications, and coordinates.</p>
+        <p class="lang-ar">تفاصيل أساسية وإجابات حول التأشيرات الطبية، واعتمادات المستشفيات، وتنسيق الرحلة.</p>
+      </div>
+
+      <div class="faq-list" data-reveal>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span class="lang-en">How is the Medical Visa (M-Visa) processed?</span>
+            <span class="lang-ar">كيف يتم استخراج التأشيرة الطبية (M-Visa)؟</span>
+          </button>
+          <div class="faq-answer">
+            <p class="lang-en">Our dedicated travel concierge provides an official JCI Hospital Visa Invitation Letter. This is processed securely via the online portal, granting medical entry clearance within 3 to 4 working days.</p>
+            <p class="lang-ar">يوفر منسق السفر المخصص لدينا خطاب دعوة رسمي من المستشفى المعتمد من JCI. يتم تقديم هذا الخطاب بشكل آمن عبر البوابة الإلكترونية الحكومية، وتصدر موافقة الدخول الطبي في غضون 3 إلى 4 أيام عمل.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span class="lang-en">How long must I remain in India after cardiac/joint surgery?</span>
+            <span class="lang-ar">كم من الوقت يجب أن أبقى في الهند بعد جراحة القلب أو المفاصل؟</span>
+          </button>
+          <div class="faq-answer">
+            <p class="lang-en">Generally, 10 to 14 days are advised. This permits safe initial recovery, post-surgical dressing changes, direct physical therapy sessions, and a comprehensive final check before clinical fit-to-fly clearance.</p>
+            <p class="lang-ar">يُنصح عمومًا بالبقاء لمدة 10 إلى 14 يومًا. يتيح ذلك فترة تعافي أولي آمنة، تغيير الضمادات بعد الجراحة، جلسات العلاج الطبيعي المباشرة، وإجراء الفحص النهائي الشامل للحصول على تصريح طبي ملائم للطيران.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span class="lang-en">Are translations and Arabic dietary requirements covered?</span>
+            <span class="lang-ar">هل الترجمة والوجبات العربية المخصصة متوفرة؟</span>
+          </button>
+          <div class="faq-answer">
+            <p class="lang-en">Yes. All JCI partner institutions incorporate dedicated international departments providing professional Arabic translators, customized Halal culinary suites, and private multi-lingual nurse care coordinates.</p>
+            <p class="lang-ar">نعم. تحتوي جميع المستشفيات الشريكة المعتمدة من JCI على أقسام دولية مخصصة توفر مترجمين فوريين للغة العربية، وجبات طعام حلال مخصصة، ورعاية تمريضية خاصة متعددة اللغات لتلبية كافة متطلباتكم.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Lead Form -->
+  <section class="cta" id="consultation" style="padding: var(--section-py) 0;">
+    <div class="container">
+      <h2 data-reveal class="lang-en">Get Your Free Treatment Plan</h2>
+      <h2 data-reveal class="lang-ar">احصل على خطة علاج مجانية</h2>
+      <p data-reveal data-reveal-delay="80" class="lang-en">Receive a personalized treatment plan, estimated costs, and expert guidance from our patient coordinator.</p>
+      <p data-reveal data-reveal-delay="80" class="lang-ar">احصل على خطة علاج مخصصة، وتكاليف تقديرية، وإرشادات الخبراء من منسق المرضى لدينا.</p>
+      
+      <form id="consultationForm" class="consultation-form" novalidate data-reveal data-reveal-delay="160">
+        <input type="hidden" id="hiddenLocation" name="location" value="Dubai, UAE" />
+        <input type="hidden" id="hiddenLeadSource" name="leadSource" value="Website" />
+        <input type="hidden" id="hiddenLanguage" name="language" value="English" />
+        <input type="hidden" id="hiddenStatus" name="status" value="New Lead" />
+        
+        <div class="form-group">
+          <label for="fullName" class="form-label">
+            <span class="lang-en">Full Name *</span>
+            <span class="lang-ar">الاسم الكامل *</span>
+          </label>
+          <input id="fullName" name="fullName" type="text" placeholder="Enter Your Full Name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="whatsapp" class="form-label">
+            <span class="lang-en">WhatsApp Number *</span>
+            <span class="lang-ar">رقم الواتساب *</span>
+          </label>
+          <input id="whatsapp" name="whatsapp" type="tel" placeholder="+971 XX XXX XXXX" required />
+        </div>
+
+        <div class="form-group">
+          <label for="datetime" class="form-label">
+            <span class="lang-en">Preferred Consultation Date & Time</span>
+            <span class="lang-ar">تاريخ ووقت الاستشارة المفضل</span>
+          </label>
+          <input id="datetime" name="datetime" type="datetime-local" placeholder="Select Preferred Date & Time" />
+        </div>
+
+        <div class="form-group">
+          <label for="category" class="form-label">
+            <span class="lang-en">Treatment Category *</span>
+            <span class="lang-ar">فئة العلاج *</span>
+          </label>
+          <select id="category" name="category" required>
+            <option value="" disabled selected>Select Category</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="treatment" class="form-label">
+            <span class="lang-en">Treatment Needed *</span>
+            <span class="lang-ar">العلاج المطلوب *</span>
+          </label>
+          <select id="treatment" name="treatment" required>
+            <option value="" disabled selected>Select Treatment</option>
+          </select>
+        </div>
+
+        <!-- Calculator container will be populated based on selected treatment -->
+        <div id="calculatorContainer"></div>
+
+        <div class="form-group">
+          <label for="notes" class="form-label">
+            <span class="lang-en">Additional Notes</span>
+            <span class="lang-ar">ملاحظات إضافية</span>
+          </label>
+          <textarea id="notes" name="notes" rows="4" placeholder="Tell us about your treatment needs or concerns."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="report" class="form-label">
+            <span class="lang-en">Upload Medical Reports (Optional)</span>
+            <span class="lang-ar">تحميل التقارير الطبية (اختياري)</span>
+          </label>
+          <input id="report" name="report" type="file" accept=".pdf,.jpg,.jpeg,.png,.docx" />
+          <p class="form-help-text lang-en">Upload scans, X-rays, medical reports, or treatment plans if available.</p>
+          <p class="form-help-text lang-ar">قم بتحميل صور الأشعة أو التحاليل أو التقارير الطبية أو خطط العلاج إذا كانت متوفرة.</p>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span class="lang-en">Get Free Treatment Plan</span>
+          <span class="lang-ar">احصل على خطة علاج مجانية</span>
+        </button>
+      </form>
+
+      <section class="trust-messages" data-reveal>
+        <ul>
+          <li>
+            <span class="lang-en">Free Medical Review</span>
+            <span class="lang-ar">مراجعة طبية مجانية</span>
+          </li>
+          <li>
+            <span class="lang-en">No Obligation</span>
+            <span class="lang-ar">بدون أي التزامات</span>
+          </li>
+          <li>
+            <span class="lang-en">Secure & Confidential</span>
+            <span class="lang-ar">آمن وسري للغاية</span>
+          </li>
+          <li>
+            <span class="lang-en">WhatsApp Response Within 24 Hours</span>
+            <span class="lang-ar">الرد عبر الواتساب خلال 24 ساعة</span>
+          </li>
+        </ul>
+      </section>
+
+      <div id="successMessage" class="success-box hidden" data-reveal>
+        <h2>Thank You!</h2>
+        <p>Your request has been submitted successfully.</p>
+        <p>Our patient coordinator will contact you on WhatsApp within 24 hours with treatment options, estimated costs, and next steps.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container" style="text-align: center; padding: 3rem 0; color: white;">
+      <h3 style="color: var(--gold); font-size: 1.5rem; margin-bottom: 10px;" class="lang-en">KèRa Wellness</h3>
+      <h3 style="color: var(--gold); font-size: 1.5rem; margin-bottom: 10px;" class="lang-ar">KèRa Wellness</h3>
+      <p style="color: #cccccc;" class="lang-en">Luxury Healthcare Concierge &amp; Medical Travel Coordination</p>
+      <p style="color: #cccccc;" class="lang-ar">التنسيق الطبي الفاخر وبوابة السفر العلاجي المتميز</p>
+      <p style="font-size: 0.75rem; color: #666666; margin-top: 2rem;" class="lang-en">© 2026 KèRa Wellness. All rights reserved. Partnered with JCI accredited clinical organizations.</p>
+      <p style="font-size: 0.75rem; color: #666666; margin-top: 2rem;" class="lang-ar">© 2026 KèRa Wellness. جميع الحقوق محفوظة. شركاء معتمدون طبيًا من منظمة JCI الدولية.</p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating FAB -->
+  <a href="https://wa.me/971500000000" class="whatsapp" target="_blank" rel="noopener noreferrer"
+    aria-label="Chat with a Coordinator on WhatsApp">
+    <span class="whatsapp-pulse" aria-hidden="true"></span>
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
+
+  <!-- Script logic for calculator, callbacks and lead validation -->
+  <script>
+    // FAQ Accordion Logic
+    const faqQuestions = document.querySelectorAll(".faq-question");
+    faqQuestions.forEach(q => {
+      q.addEventListener("click", () => {
+        const item = q.parentElement;
+        const isActive = item.classList.contains("active");
+        
+        // Close all first
+        document.querySelectorAll(".faq-item").forEach(el => el.classList.remove("active"));
+        
+        // Toggle current
+        if (!isActive) {
+          item.classList.add("active");
+        }
+      });
+    });
+
+    // Medical pricing data array
+    const pricingData = {
+      cardio: { name: "Cardiology CABG", dubai: 105000, india: 24000, selectOption: "Heart Surgery" },
+      ortho: { name: "Knee Replacement", dubai: 66000, india: 16500, selectOption: "Knee Replacement" },
+      oncology: { name: "Oncology Cancer Care", dubai: 120000, india: 35000, selectOption: "Oncology" },
+      ivf: { name: "IVF Fertility", dubai: 35000, india: 10000, selectOption: "IVF & Fertility" },
+      neuro: { name: "Neurology", dubai: 9000, india: 2500, selectOption: "IVF & Fertility" },
+      cosmetic: { name: "Cosmetic Surgery", dubai: 40000, india: 12000, selectOption: "IVF & Fertility" },
+      bariatric: { name: "Bariatric Bypass", dubai: 45000, india: 14000, selectOption: "IVF & Fertility" },
+      transplant: { name: "Organ Transplant", dubai: 250000, india: 85000, selectOption: "IVF & Fertility" },
+      spine: { name: "Spine Surgery", dubai: 75000, india: 20000, selectOption: "IVF & Fertility" }
+    };
+
+    function runCalculation() {
+      const isAr = document.documentElement.getAttribute('lang') === 'ar';
+      const selectId = isAr ? "calcTreatmentAr" : "calcTreatment";
+      const treatmentKey = document.getElementById(selectId).value;
+      const qty = parseInt(document.getElementById("calcQty").value) || 1;
+      const data = pricingData[treatmentKey];
+
+      const dubaiCost = data.dubai * qty;
+      const indiaCost = data.india * qty;
+      const savings = dubaiCost - indiaCost;
+      const savingsPct = Math.round((savings / dubaiCost) * 100);
+
+      // Render outputs
+      document.getElementById("resDubaiPrice").textContent = "AED " + dubaiCost.toLocaleString();
+      document.getElementById("resIndiaPrice").textContent = "AED " + indiaCost.toLocaleString();
+      
+      if (isAr) {
+        document.getElementById("resSavingsAmt").textContent = "AED " + savings.toLocaleString() + " (وفر " + savingsPct + "%)";
+      } else {
+        document.getElementById("resSavingsAmt").textContent = "AED " + savings.toLocaleString() + " (" + savingsPct + "% Saved)";
+      }
+
+      // Progress bars
+      document.getElementById("resDubaiBar").style.width = "100%";
+      document.getElementById("resIndiaBar").style.width = Math.max(15, Math.round((indiaCost / dubaiCost) * 100)) + "%";
+    }
+
+    // Auto-populate form treatment when clicking calculator quote
+    // Supports both EN/AR form selects
+    function setFormTreatment() {
+      const isAr = document.documentElement.getAttribute('lang') === 'ar';
+      const selectId = isAr ? "calcTreatmentAr" : "calcTreatment";
+      const treatmentKey = document.getElementById(selectId).value;
+      const data = pricingData[treatmentKey];
+      
+      // Auto populate the Category and Treatment in the unified form
+      const categorySel = document.getElementById("category");
+      const treatmentSel = document.getElementById("treatment");
+      
+      if (categorySel && treatmentSel) {
+        categorySel.value = "Medical Care";
+        // Trigger change event to populate treatment list
+        categorySel.dispatchEvent(new Event('change'));
+        
+        // Wait briefly for population, then set value
+        setTimeout(() => {
+          treatmentSel.value = data.selectOption;
+          treatmentSel.dispatchEvent(new Event('change'));
+          
+          // Scroll to the consultation form
+          document.getElementById("consultation").scrollIntoView({ behavior: 'smooth' });
+        }, 50);
+      }
+    }
+
+    // Sync dropdown changes between EN/AR selects
+    document.addEventListener("DOMContentLoaded", () => {
+      const enSelect = document.getElementById("calcTreatment");
+      const arSelect = document.getElementById("calcTreatmentAr");
+      if (enSelect && arSelect) {
+        enSelect.addEventListener("change", (e) => {
+          arSelect.value = e.target.value;
+          runCalculation();
+        });
+        arSelect.addEventListener("change", (e) => {
+          enSelect.value = e.target.value;
+          runCalculation();
+        });
+      }
+      
+      // Force play background video to prevent browser autoplay blocks
+      const video = document.getElementById("heroVideo");
+      if (video && video.querySelector("source")) {
+        video.play().catch(err => {
+          console.log("Autoplay blocked. Registering interaction trigger.", err);
+          const playOnInteraction = () => {
+            video.play();
+            document.removeEventListener("click", playOnInteraction);
+            document.removeEventListener("touchstart", playOnInteraction);
+          };
+          document.addEventListener("click", playOnInteraction);
+          document.addEventListener("touchstart", playOnInteraction);
+        });
+      }
+      
+      runCalculation();
+    });
+  </script>
+  <script src="form.js"></script>
+  <script src="./js/scroll-reveal.js" defer></script>
+</body>
+</html>

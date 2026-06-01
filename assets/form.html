@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>Get Your Free Treatment Plan</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+  <script src="./js/language-switch.js"></script>
+</head>
+<body style="background: var(--bg-light); padding: 3rem 0;">
+  <main class="container" style="max-width: 750px; margin: 0 auto; padding: 0 1.5rem;">
+    <!-- Language Switcher inside form page -->
+    <div class="lang-switcher" style="display: flex; justify-content: flex-end; margin-bottom: 2rem;">
+      <button onclick="setLanguage('en')" class="lang-btn btn-lang-en active" id="btn-lang-en">EN</button>
+      <span style="margin: 0 10px; color: #64748b;">|</span>
+      <button onclick="setLanguage('ar')" class="lang-btn btn-lang-ar" id="btn-lang-ar">عربي</button>
+    </div>
+
+    <section class="hero" style="text-align: center; margin-bottom: 2.5rem;">
+      <h1 class="title lang-en" style="font-size: 2.25rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 0.5rem;">Get Your Free Treatment Plan</h1>
+      <h1 class="title lang-ar" style="font-size: 2.25rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 0.5rem; display:none;">احصل على خطة علاج مجانية</h1>
+      <p class="subtitle lang-en" style="font-size: 1.1rem; color: var(--text-muted);">Share your details and medical reports. Our patient coordinator will contact you via WhatsApp within 24 hours.</p>
+      <p class="subtitle lang-ar" style="font-size: 1.1rem; color: var(--text-muted); display:none;">شاركنا تفاصيلك وتقاريرك الطبية. سيتواصل معك منسق المرضى لدينا عبر الواتساب خلال 24 ساعة.</p>
+    </section>
+
+    <form id="consultationForm" class="consultation-form" novalidate style="margin-top:0;">
+      <input type="hidden" id="hiddenLocation" name="location" value="Dubai, UAE" />
+      <input type="hidden" id="hiddenLeadSource" name="leadSource" value="Website" />
+      <input type="hidden" id="hiddenLanguage" name="language" value="English" />
+      <input type="hidden" id="hiddenStatus" name="status" value="New Lead" />
+      
+      <div class="form-group">
+        <label for="fullName" class="form-label">
+          <span class="lang-en">Full Name *</span>
+          <span class="lang-ar">الاسم الكامل *</span>
+        </label>
+        <input id="fullName" name="fullName" type="text" placeholder="Enter Your Full Name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="whatsapp" class="form-label">
+          <span class="lang-en">WhatsApp Number *</span>
+          <span class="lang-ar">رقم الواتساب *</span>
+        </label>
+        <input id="whatsapp" name="whatsapp" type="tel" placeholder="+971 XX XXX XXXX" required />
+      </div>
+
+      <div class="form-group">
+        <label for="datetime" class="form-label">
+          <span class="lang-en">Preferred Consultation Date & Time</span>
+          <span class="lang-ar">تاريخ ووقت الاستشارة المفضل</span>
+        </label>
+        <input id="datetime" name="datetime" type="datetime-local" placeholder="Select Preferred Date & Time" />
+      </div>
+
+      <div class="form-group">
+        <label for="category" class="form-label">
+          <span class="lang-en">Treatment Category *</span>
+          <span class="lang-ar">فئة العلاج *</span>
+        </label>
+        <select id="category" name="category" required>
+          <option value="" disabled selected>Select Category</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="treatment" class="form-label">
+          <span class="lang-en">Treatment Needed *</span>
+          <span class="lang-ar">العلاج المطلوب *</span>
+        </label>
+        <select id="treatment" name="treatment" required>
+          <option value="" disabled selected>Select Treatment</option>
+        </select>
+      </div>
+
+      <!-- Calculator container will be populated based on selected treatment -->
+      <div id="calculatorContainer"></div>
+
+      <div class="form-group">
+        <label for="notes" class="form-label">
+          <span class="lang-en">Additional Notes</span>
+          <span class="lang-ar">ملاحظات إضافية</span>
+        </label>
+        <textarea id="notes" name="notes" rows="4" placeholder="Tell us about your treatment needs or concerns."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="report" class="form-label">
+          <span class="lang-en">Upload Medical Reports (Optional)</span>
+          <span class="lang-ar">تحميل التقارير الطبية (اختياري)</span>
+        </label>
+        <input id="report" name="report" type="file" accept=".pdf,.jpg,.jpeg,.png,.docx" />
+        <p class="form-help-text lang-en" style="color: var(--text-muted) !important;">Upload scans, X-rays, medical reports, or treatment plans if available.</p>
+        <p class="form-help-text lang-ar" style="color: var(--text-muted) !important; display:none;">قم بتحميل صور الأشعة أو التحاليل أو التقارير الطبية أو خطط العلاج إذا كانت متوفرة.</p>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <span class="lang-en">Get Free Treatment Plan</span>
+        <span class="lang-ar">احصل على خطة علاج مجانية</span>
+      </button>
+    </form>
+
+    <section class="trust-messages" style="margin-top: 2rem;">
+      <ul style="max-width:100%;">
+        <li style="color: var(--text-dark) !important;">
+          <span class="lang-en">Free Medical Review</span>
+          <span class="lang-ar">مراجعة طبية مجانية</span>
+        </li>
+        <li style="color: var(--text-dark) !important;">
+          <span class="lang-en">No Obligation</span>
+          <span class="lang-ar">بدون أي التزامات</span>
+        </li>
+        <li style="color: var(--text-dark) !important;">
+          <span class="lang-en">Secure & Confidential</span>
+          <span class="lang-ar">آمن وسري للغاية</span>
+        </li>
+        <li style="color: var(--text-dark) !important;">
+          <span class="lang-en">WhatsApp Response Within 24 Hours</span>
+          <span class="lang-ar">الرد عبر الواتساب خلال 24 ساعة</span>
+        </li>
+      </ul>
+    </section>
+
+    <div id="successMessage" class="success-box hidden" style="margin-top:2rem;">
+      <h2>Thank You!</h2>
+      <p>Your request has been submitted successfully.</p>
+      <p>Our patient coordinator will contact you on WhatsApp within 24 hours with treatment options, estimated costs, and next steps.</p>
+    </div>
+  </main>
+
+  <script src="form.js"></script>
+</body>
+</html>
