@@ -240,4 +240,11 @@ module.exports = async (req, res) => {
     } else if (typeof res.waitUntil === 'function') {
       res.waitUntil(promise);
     }
+
+  } catch (error) {
+    console.error('Request processing failed:', error);
+    if (!res.headersSent) {
+      res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+  }
 };
