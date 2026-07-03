@@ -1,4 +1,4 @@
-const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbzgJQarFAWZm9bz6xz6GPuitcuGckDC2kofPu7iY-ZnY5bvK9KfWi8l0Ci_scfNo1uW/exec';
+const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbw2aE4KIel66xfARsNRfRu5KUYQE5FpaaG8e6G1b8YUl8Rc_DAOr-Ga12LUQNyG_93U/exec';
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
