@@ -318,6 +318,24 @@
       </div>
 
       <div class="form-group">
+        <label for="email" class="form-label">
+          <span class="lang-en">Email Address *</span>
+          <span class="lang-ar">البريد الإلكتروني *</span>
+        </label>
+        <input id="email" name="email" type="email" placeholder="Enter Your Email Address" required />
+      </div>
+
+      <div class="form-group">
+        <label for="country" class="form-label">
+          <span class="lang-en">Country *</span>
+          <span class="lang-ar">الدولة *</span>
+        </label>
+        <select id="country" name="country" required>
+          <option value="" disabled selected>Select Country</option>
+        </select>
+      </div>
+
+      <div class="form-group">
         <label for="whatsapp" class="form-label">
           <span class="lang-en">WhatsApp Number *</span>
           <span class="lang-ar">رقم الواتساب *</span>
@@ -370,6 +388,10 @@
           <span class="lang-ar">تحميل التقارير الطبية (اختياري)</span>
         </label>
         <input id="report" name="report" type="file" accept=".pdf,.jpg,.jpeg,.png,.docx" />
+        <div id="imagePreviewContainer" style="display: none; margin-top: 12px; position: relative; width: max-content;">
+          <img id="imagePreview" src="" alt="Preview" style="max-width: 120px; max-height: 120px; border-radius: 8px; border: 2px solid var(--accent-gold, #c5a880); object-fit: cover; display: block;" />
+          <button type="button" id="removeImageBtn" style="position: absolute; top: -6px; right: -6px; background: #ff4d4d; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; line-height: 1;">&times;</button>
+        </div>
         <p class="form-help-text lang-en">Upload scans, X-rays, medical reports, or treatment plans if available.</p>
         <p class="form-help-text lang-ar">قم بتحميل صور الأشعة أو التحاليل أو التقارير الطبية أو خطط العلاج إذا كانت متوفرة.</p>
       </div>

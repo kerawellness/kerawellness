@@ -1,4 +1,58 @@
-// form.js - Handles dynamic dropdown, validation, and submission with bilingual support
+// Helper function to compress images client-side before uploading
+function compressImage(file, maxWidth = 1200, maxHeight = 1200, quality = 0.7) {
+  return new Promise((resolve) => {
+    if (!file.type.startsWith('image/')) {
+      resolve(file);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, "") + ".jpg", {
+                type: 'image/jpeg',
+                lastModified: Date.now()
+              });
+              resolve(compressedFile);
+            } else {
+              resolve(file);
+            }
+          },
+          'image/jpeg',
+          quality
+        );
+      };
+      img.onerror = () => resolve(file);
+      img.src = e.target.result;
+    };
+    reader.onerror = () => resolve(file);
+    reader.readAsDataURL(file);
+  });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const categorySelect = document.getElementById('category');
@@ -58,10 +112,52 @@ document.addEventListener('DOMContentLoaded', () => {
   dentalData['All-on-6 Implants'] = dentalData['All-on-6'];
   dentalData['Root Canal Treatment'] = dentalData['Root Canal'];
 
+  const countryConfig = {
+    AE: { code: '+971', placeholder: '+971 50 123 4567', digits: 9, regex: /^\+971[0-9]{9}$/, nameEn: 'United Arab Emirates (+971)', nameAr: 'الإمارات العربية المتحدة (+971)' },
+    SA: { code: '+966', placeholder: '+966 50 123 4567', digits: 9, regex: /^\+966[0-9]{9}$/, nameEn: 'Saudi Arabia (+966)', nameAr: 'المملكة العربية السعودية (+966)' },
+    OM: { code: '+968', placeholder: '+968 9123 4567', digits: 8, regex: /^\+968[0-9]{8}$/, nameEn: 'Oman (+968)', nameAr: 'سلطنة عمان (+968)' },
+    QA: { code: '+974', placeholder: '+974 5512 3456', digits: 8, regex: /^\+974[0-9]{8}$/, nameEn: 'Qatar (+974)', nameAr: 'قطر (+974)' },
+    BH: { code: '+973', placeholder: '+973 3912 3456', digits: 8, regex: /^\+973[0-9]{8}$/, nameEn: 'Bahrain (+973)', nameAr: 'البحرين (+973)' },
+    KW: { code: '+965', placeholder: '+965 5123 4567', digits: 8, regex: /^\+965[0-9]{8}$/, nameEn: 'Kuwait (+965)', nameAr: 'الكويت (+965)' },
+    IN: { code: '+91', placeholder: '+91 98765 43210', digits: 10, regex: /^\+91[0-9]{10}$/, nameEn: 'India (+91)', nameAr: 'الهند (+91)' },
+    US: { code: '+1', placeholder: '+1 202 555 0123', digits: 10, regex: /^\+1[0-9]{10}$/, nameEn: 'United States (+1)', nameAr: 'الولايات المتحدة (+1)' },
+    GB: { code: '+44', placeholder: '+44 7911 123456', digits: 10, regex: /^\+44[0-9]{10}$/, nameEn: 'United Kingdom (+44)', nameAr: 'المملكة المتحدة (+44)' },
+    CA: { code: '+1', placeholder: '+1 416 555 0123', digits: 10, regex: /^\+1[0-9]{10}$/, nameEn: 'Canada (+1)', nameAr: 'كندا (+1)' },
+    AU: { code: '+61', placeholder: '+61 412 345 678', digits: 9, regex: /^\+61[0-9]{9}$/, nameEn: 'Australia (+61)', nameAr: 'أستراليا (+61)' },
+    EG: { code: '+20', placeholder: '+20 10 1234 5678', digits: 10, regex: /^\+20[0-9]{10}$/, nameEn: 'Egypt (+20)', nameAr: 'مصر (+20)' },
+    JO: { code: '+962', placeholder: '+962 7 9123 4567', digits: 9, regex: /^\+962[0-9]{9}$/, nameEn: 'Jordan (+962)', nameAr: 'الأردن (+962)' },
+    LB: { code: '+961', placeholder: '+961 71 123 456', digits: 8, regex: /^\+961[0-9]{8}$/, nameEn: 'Lebanon (+961)', nameAr: 'لبنان (+961)' },
+    SY: { code: '+963', placeholder: '+963 91 234 5678', digits: 9, regex: /^\+963[0-9]{9}$/, nameEn: 'Syria (+963)', nameAr: 'سوريا (+963)' },
+    IQ: { code: '+964', placeholder: '+964 770 123 4567', digits: 10, regex: /^\+964[0-9]{10}$/, nameEn: 'Iraq (+964)', nameAr: 'العراق (+964)' },
+    YE: { code: '+967', placeholder: '+967 71 234 5678', digits: 9, regex: /^\+967[0-9]{9}$/, nameEn: 'Yemen (+967)', nameAr: 'اليمن (+967)' },
+    PS: { code: '+970', placeholder: '+970 59 123 4567', digits: 9, regex: /^\+970[0-9]{9}$/, nameEn: 'Palestine (+970)', nameAr: 'فلسطين (+970)' },
+    SD: { code: '+249', placeholder: '+249 91 234 5678', digits: 9, regex: /^\+249[0-9]{9}$/, nameEn: 'Sudan (+249)', nameAr: 'السودان (+249)' },
+    LY: { code: '+218', placeholder: '+218 91 123 4567', digits: 9, regex: /^\+218[0-9]{9}$/, nameEn: 'Libya (+218)', nameAr: 'ليبيا (+218)' },
+    TN: { code: '+216', placeholder: '+216 98 123 456', digits: 8, regex: /^\+216[0-9]{8}$/, nameEn: 'Tunisia (+216)', nameAr: 'تونس (+216)' },
+    DZ: { code: '+213', placeholder: '+213 550 12 34 56', digits: 9, regex: /^\+213[0-9]{9}$/, nameEn: 'Algeria (+213)', nameAr: 'الجزائر (+213)' },
+    MA: { code: '+212', placeholder: '+212 612 345678', digits: 9, regex: /^\+212[0-9]{9}$/, nameEn: 'Morocco (+212)', nameAr: 'المغرب (+212)' },
+    PK: { code: '+92', placeholder: '+92 300 1234567', digits: 10, regex: /^\+92[0-9]{10}$/, nameEn: 'Pakistan (+92)', nameAr: 'باكستان (+92)' },
+    BD: { code: '+880', placeholder: '+880 17 1234 5678', digits: 10, regex: /^\+880[0-9]{10}$/, nameEn: 'Bangladesh (+880)', nameAr: 'بنغلاديش (+880)' },
+    PH: { code: '+63', placeholder: '+63 917 123 4567', digits: 10, regex: /^\+63[0-9]{10}$/, nameEn: 'Philippines (+63)', nameAr: 'الفلبين (+63)' },
+    LK: { code: '+94', placeholder: '+94 77 123 4567', digits: 9, regex: /^\+94[0-9]{9}$/, nameEn: 'Sri Lanka (+94)', nameAr: 'سريلانكا (+94)' },
+    NP: { code: '+977', placeholder: '+977 98 1234 5678', digits: 10, regex: /^\+977[0-9]{10}$/, nameEn: 'Nepal (+977)', nameAr: 'نيبال (+977)' },
+    DE: { code: '+49', placeholder: '+49 170 1234567', digits: 11, regex: /^\+49[0-9]{10,11}$/, nameEn: 'Germany (+49)', nameAr: 'ألمانيا (+49)' },
+    FR: { code: '+33', placeholder: '+33 6 1234 5678', digits: 9, regex: /^\+33[0-9]{9}$/, nameEn: 'France (+33)', nameAr: 'فرنسا (+33)' },
+    IT: { code: '+39', placeholder: '+39 312 345 6789', digits: 10, regex: /^\+39[0-9]{10}$/, nameEn: 'Italy (+39)', nameAr: 'إيطاليا (+39)' },
+    ES: { code: '+34', placeholder: '+34 612 345 678', digits: 9, regex: /^\+34[0-9]{9}$/, nameEn: 'Spain (+34)', nameAr: 'إسبانيا (+34)' },
+    TR: { code: '+90', placeholder: '+90 532 123 4567', digits: 10, regex: /^\+90[0-9]{10}$/, nameEn: 'Turkey (+90)', nameAr: 'تركيا (+90)' },
+    RU: { code: '+7', placeholder: '+7 912 345-67-89', digits: 10, regex: /^\+7[0-9]{10}$/, nameEn: 'Russia (+7)', nameAr: 'روسيا (+7)' },
+    ZA: { code: '+27', placeholder: '+27 82 123 4567', digits: 9, regex: /^\+27[0-9]{9}$/, nameEn: 'South Africa (+27)', nameAr: 'جنوب أفريقيا (+27)' },
+    NG: { code: '+234', placeholder: '+234 803 123 4567', digits: 10, regex: /^\+234[0-9]{10}$/, nameEn: 'Nigeria (+234)', nameAr: 'نيجيريا (+234)' },
+    KE: { code: '+254', placeholder: '+254 712 345678', digits: 9, regex: /^\+254[0-9]{9}$/, nameEn: 'Kenya (+254)', nameAr: 'كينيا (+254)' },
+    OTHER: { code: '+', placeholder: '+1 234 567 8900', digits: 15, regex: /^\+[0-9]{7,15}$/, nameEn: 'Other Country', nameAr: 'دولة أخرى' }
+  };
+
   const translations = {
     en: {
       selectCategory: 'Select Category',
       selectTreatment: 'Select Treatment',
+      selectCountry: 'Select Country',
       dentalCare: 'Dental Care',
       medicalCare: 'Medical Care',
       dubaiCost: 'Dubai Cost',
@@ -101,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       submitText: 'Get Free Treatment Plan',
       submittingText: 'Transmitting VIP File...',
-      whatsappError: 'WhatsApp number must start with +971 followed by 9 digits (e.g. +971501234567)',
       successTitle: 'Thank You!',
       successMsg1: 'Your request has been submitted successfully.',
       successMsg2: 'Our patient coordinator will contact you on WhatsApp within 24 hours with treatment options, estimated costs, and next steps.'
@@ -109,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ar: {
       selectCategory: 'اختر الفئة',
       selectTreatment: 'اختر العلاج',
+      selectCountry: 'اختر الدولة',
       dentalCare: 'رعاية الأسنان',
       medicalCare: 'الرعاية الطبية',
       dubaiCost: 'التكلفة في دبي',
@@ -148,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       submitText: 'احصل على خطة علاج مجانية',
       submittingText: 'جاري إرسال الملف الطبي...',
-      whatsappError: 'يجب أن يبدأ رقم الواتساب بـ +971 متبوعاً بـ 9 أرقام (مثال: +971501234567)',
       successTitle: 'شكراً لك!',
       successMsg1: 'تم تقديم طلبك بنجاح.',
       successMsg2: 'سيتواصل معك منسق المرضى لدينا عبر الواتساب خلال 24 ساعة لتقديم خيارات العلاج، التكاليف التقديرية، والخطوات التالية.'
@@ -240,11 +335,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (fullNameInput) {
       fullNameInput.placeholder = lang === 'ar' ? 'أدخل اسمك الكامل' : 'Enter Your Full Name';
     }
-    if (whatsappInput) {
-      whatsappInput.placeholder = '+971 XX XXX XXXX';
-    }
     if (notesInput) {
       notesInput.placeholder = lang === 'ar' ? 'أخبرنا عن احتياجاتك أو مخاوفك العلاجية.' : 'Tell us about your treatment needs or concerns.';
+    }
+
+    // Update Country dropdown options
+    const countrySelect = document.getElementById('country');
+    if (countrySelect) {
+      const selectedValue = countrySelect.value;
+      let html = `<option value="" disabled ${!selectedValue ? 'selected' : ''}>${t.selectCountry}</option>`;
+      Object.keys(countryConfig).forEach(key => {
+        const item = countryConfig[key];
+        const label = lang === 'ar' ? item.nameAr : item.nameEn;
+        html += `<option value="${key}" data-code="${item.code}" ${selectedValue === key ? 'selected' : ''}>${label}</option>`;
+      });
+      countrySelect.innerHTML = html;
+
+      // Update phone placeholder and prefix
+      if (selectedValue && whatsappInput) {
+        const config = countryConfig[selectedValue] || countryConfig.OTHER;
+        whatsappInput.placeholder = config.placeholder;
+      }
+    } else if (whatsappInput) {
+      whatsappInput.placeholder = '+971 XX XXX XXXX';
     }
 
     // Update Category dropdown options
@@ -330,21 +443,78 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Handle Country selection and WhatsApp prefix
+  const countrySelectEl = document.getElementById('country');
+  const whatsappInputEl = document.getElementById('whatsapp');
+  if (countrySelectEl && whatsappInputEl) {
+    countrySelectEl.addEventListener('change', () => {
+      const val = countrySelectEl.value;
+      const config = countryConfig[val] || countryConfig.OTHER;
+      
+      // If empty or starts with previous code, replace it
+      if (!whatsappInputEl.value || whatsappInputEl.value.startsWith('+')) {
+        whatsappInputEl.value = config.code;
+      }
+      whatsappInputEl.placeholder = config.placeholder;
+    });
+  }
+
+  // Handle Medical Report Image Preview
+  const reportInput = document.getElementById('report');
+  const previewContainer = document.getElementById('imagePreviewContainer');
+  const previewImage = document.getElementById('imagePreview');
+  const removeBtn = document.getElementById('removeImageBtn');
+
+  if (reportInput && previewContainer && previewImage) {
+    reportInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          previewImage.src = event.target.result;
+          previewContainer.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        previewContainer.style.display = 'none';
+        previewImage.src = '';
+      }
+    });
+
+    if (removeBtn) {
+      removeBtn.addEventListener('click', () => {
+        reportInput.value = '';
+        previewContainer.style.display = 'none';
+        previewImage.src = '';
+      });
+    }
+  }
+
   // Handle Form Submission
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Validate WhatsApp number start and length
+      // Get WhatsApp number (without regex formatting limit)
       const whatsappInput = document.getElementById('whatsapp');
       let phoneVal = '';
       if (whatsappInput) {
-        phoneVal = whatsappInput.value.trim().replace(/[\s\-()]/g, '');
-        const uaeRegex = /^\+971[0-9]{9}$/;
-        if (!uaeRegex.test(phoneVal)) {
+        phoneVal = whatsappInput.value.trim();
+      }
+
+      // Validate email format
+      const emailInput = document.getElementById('email');
+      let emailVal = '';
+      if (emailInput) {
+        emailVal = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailVal)) {
           const lang = document.documentElement.getAttribute('lang') === 'ar' ? 'ar' : 'en';
-          alert(translations[lang].whatsappError);
-          whatsappInput.focus();
+          const errorMsg = lang === 'ar' ? 
+            'يرجى إدخال عنوان بريد إلكتروني صحيح' : 
+            'Please enter a valid email address';
+          alert(errorMsg);
+          emailInput.focus();
           return;
         }
       }
@@ -362,6 +532,39 @@ document.addEventListener('DOMContentLoaded', () => {
         timeVal = dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       }
 
+      const countrySelect = document.getElementById('country');
+      const countryStr = countrySelect ? countrySelect.value : 'AE';
+
+      // Read report file as base64 if present, then upload to Google Drive via Apps Script
+      let reportFileData = null;
+      let reportFileURL = '';
+      const fileInput = document.getElementById('report');
+      let file = fileInput ? fileInput.files[0] : null;
+
+      if (file) {
+        if (file.type.startsWith('image/')) {
+          try {
+            file = await compressImage(file);
+          } catch (compressErr) {
+            console.warn('Image compression failed, using original file:', compressErr);
+          }
+        }
+
+        reportFileData = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            resolve({
+              base64: event.target.result,
+              name: file.name,
+              type: file.type
+            });
+          };
+          reader.readAsDataURL(file);
+        });
+
+        reportFileURL = file.name;
+      }
+
       const payload = {
         Timestamp: timestamp,
         LeadID: leadId,
@@ -371,11 +574,13 @@ document.addEventListener('DOMContentLoaded', () => {
         PreferredConsultationTime: timeVal,
         TreatmentCategory: categorySelect.value,
         TreatmentNeeded: treatmentSelect.value,
-        ReportFileURL: document.getElementById('report').files[0]?.name || '',
-        Location: document.getElementById('hiddenLocation').value,
+        ReportFileURL: reportFileURL,
+        Location: (countryConfig[countryStr] && countryConfig[countryStr].nameEn) ? countryConfig[countryStr].nameEn.split(' (')[0] : 'United Arab Emirates',
         Language: document.getElementById('hiddenLanguage').value,
         LeadSource: document.getElementById('hiddenLeadSource').value,
-        Status: document.getElementById('hiddenStatus').value
+        Status: document.getElementById('hiddenStatus').value,
+        Email: emailVal,
+        reportFile: reportFileData
       };
 
       console.log('--- SAVE TO GOOGLE SHEETS PAYLOAD ---');
