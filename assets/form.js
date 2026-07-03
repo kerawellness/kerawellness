@@ -1,5 +1,5 @@
 // Helper function to compress images client-side before uploading
-function compressImage(file, maxWidth = 1200, maxHeight = 1200, quality = 0.7) {
+function compressImage(file, maxWidth = 1200, maxHeight = 1200, quality = 0.5) {
   return new Promise((resolve) => {
     if (!file.type.startsWith('image/')) {
       resolve(file);
