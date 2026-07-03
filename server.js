@@ -185,97 +185,30 @@ app.post('/api/submit', async (req, res) => {
       return res.status(400).json({ success: false, error: 'Full Name, WhatsApp Number, and Email are required.' });
     }
 
-    // Fallbacks verified, skipping environment variables validation
+    console.log('Forwarding local form submission to Google Apps Script...');
+    
+    const response = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(req.body)
+    });
 
-    // Return success response to the client immediately so they don't wait for third-party API delays
-    res.status(200).json({ success: true, message: 'Form submission received' });
+    const text = await response.text();
+    let result;
+    try {
+      result = JSON.parse(text);
+    } catch {
+      throw new Error(`Apps Script responded with invalid JSON: ${text.slice(0, 100)}`);
+    }
 
-    // Process file upload and Google Sheet appending asynchronously in the background
-    (async () => {
-      try {
-        const auth = getGoogleAuth();
-        const sheets = getSheetsClient();
-        
-        let finalReportURL = ReportFileURL || '';
-        let imageUploaded = false;
+    if (!result.success) {
+      throw new Error(result.error || 'Apps Script execution failed');
+    }
 
-        // Already uploaded from browser (form.js sends =IMAGE(...) formula directly)
-        if (finalReportURL.startsWith('=IMAGE(') || finalReportURL.startsWith('=HYPERLINK(')) {
-          imageUploaded = true;
-        }
+    return res.status(200).json({ success: true, message: 'Form submission saved successfully' });
 
-        // If base64 file data is sent, upload to a public URL then store =IMAGE("url") in the sheet
-        if (!imageUploaded && reportFile && reportFile.base64) {
-          const isImage = reportFile.type.startsWith('image/');
-          try {
-            if (APPS_SCRIPT_URL) {
-              console.log('Uploading image via Apps Script...');
-              const uploadResult = await uploadToAppsScript(APPS_SCRIPT_URL, reportFile);
-              if (isImage && uploadResult.id) {
-                finalReportURL = buildSheetImageFormula(buildDriveImageUrl(uploadResult.id), uploadResult.url);
-                imageUploaded = true;
-                console.log('Image uploaded to Drive, file ID:', uploadResult.id);
-              } else {
-                finalReportURL = `=HYPERLINK("${uploadResult.url}", "${reportFile.name}")`;
-                imageUploaded = true;
-              }
-            } else if (process.env.IMGBB_API_KEY && isImage) {
-              console.log('Uploading image via ImgBB...');
-              const uploadResult = await uploadToImgBB(process.env.IMGBB_API_KEY, reportFile);
-              finalReportURL = buildSheetImageFormula(uploadResult.url);
-              imageUploaded = true;
-            } else if (GOOGLE_DRIVE_FOLDER_ID) {
-              console.log('Uploading via Service Account Drive (requires Google Workspace Shared Drive)...');
-              const driveResponse = await uploadToDrive(auth, reportFile);
-              if (driveResponse && driveResponse.id) {
-                if (isImage) {
-                  finalReportURL = buildSheetImageFormula(buildDriveImageUrl(driveResponse.id), driveResponse.webViewLink);
-                } else {
-                  finalReportURL = `=HYPERLINK("${driveResponse.webViewLink}", "${reportFile.name}")`;
-                }
-                imageUploaded = true;
-              }
-            } else {
-              throw new Error(
-                'No image upload method configured.'
-              );
-            }
-          } catch (uploadError) {
-            console.error('Image upload failed — sheet will show filename only:', uploadError.message);
-            finalReportURL = reportFile.name || '';
-          }
-        }
-
-        // Append the row to Google Sheets
-        console.log('Appending row to Google Sheets...');
-        await sheets.spreadsheets.values.append({
-          spreadsheetId: SPREADSHEET_ID,
-          range: 'Sheet1!A:N',
-          valueInputOption: 'USER_ENTERED',
-          requestBody: {
-            values: [[
-              Timestamp || new Date().toISOString(),
-              LeadID || '',
-              FullName || '',
-              WhatsAppNumber || '',
-              Email || '',
-              PreferredConsultationDate || '',
-              PreferredConsultationTime || '',
-              TreatmentCategory || '',
-              TreatmentNeeded || '',
-              finalReportURL,
-              Location || '',
-              Language || '',
-              LeadSource || '',
-              Status || 'New Lead'
-            ]],
-          },
-        });
-        console.log('Row successfully appended to Google Sheet for:', FullName);
-      } catch (bgError) {
-        console.error('Background processing error:', bgError);
-      }
-    })();
   } catch (error) {
     console.error('API submit error:', error);
     if (!res.headersSent) {

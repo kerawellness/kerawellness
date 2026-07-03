@@ -592,22 +592,31 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.textContent = translations[lang].submittingText;
       submitBtn.disabled = true;
 
-      // Send submission request in the background
-      fetch('/api/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      }).catch(err => {
-        console.error("Submission background error:", err);
-      });
+      try {
+        const response = await fetch('/api/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
 
-      // Transition to success screen instantly for a better user experience
-      form.classList.add('hidden');
-      if (successSection) {
-        successSection.classList.remove('hidden');
-        successSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const result = await response.json();
+
+        if (result.success) {
+          form.classList.add('hidden');
+          if (successSection) {
+            successSection.classList.remove('hidden');
+            successSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else {
+          throw new Error(result.error || 'Server error occurred');
+        }
+      } catch (err) {
+        console.error("Submission error:", err);
+        alert(lang === 'ar' ? 'فشل إرسال الطلب. يرجى المحاولة مرة أخرى.' : 'Failed to submit. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = translations[lang].submitText;
       }
     });
   }
