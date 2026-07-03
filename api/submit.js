@@ -153,84 +153,91 @@ module.exports = async (req, res) => {
       return res.status(400).json({ success: false, error: 'Full Name, WhatsApp Number, and Email are required.' });
     }
 
-    const auth = getGoogleAuth();
-    const sheets = getSheetsClient();
-    
-    let finalReportURL = ReportFileURL || '';
-    let imageUploaded = false;
+    // Return success response to the client immediately so they don't wait for Google API delays
+    res.status(200).json({ success: true, message: 'Form submission received' });
 
-    if (finalReportURL.startsWith('=IMAGE(') || finalReportURL.startsWith('=HYPERLINK(')) {
-      imageUploaded = true;
-    }
-
-    if (!imageUploaded && reportFile && reportFile.base64) {
-      const isImage = reportFile.type.startsWith('image/');
+    // Process file upload and Google Sheet appending in a background promise
+    const promise = (async () => {
       try {
-        if (APPS_SCRIPT_URL) {
-          console.log('Uploading image via Apps Script...');
-          const uploadResult = await uploadToAppsScript(APPS_SCRIPT_URL, reportFile);
-          if (isImage && uploadResult.id) {
-            finalReportURL = buildSheetImageFormula(buildDriveImageUrl(uploadResult.id), uploadResult.url);
-            imageUploaded = true;
-            console.log('Image uploaded to Drive, file ID:', uploadResult.id);
-          } else {
-            finalReportURL = `=HYPERLINK("${uploadResult.url}", "${reportFile.name}")`;
-            imageUploaded = true;
-          }
-        } else if (GOOGLE_DRIVE_FOLDER_ID) {
-          console.log('Uploading via Service Account Drive (requires Google Workspace Shared Drive)...');
-          const driveResponse = await uploadToDrive(auth, reportFile);
-          if (driveResponse && driveResponse.id) {
-            if (isImage) {
-              finalReportURL = buildSheetImageFormula(buildDriveImageUrl(driveResponse.id), driveResponse.webViewLink);
-            } else {
-              finalReportURL = `=HYPERLINK("${driveResponse.webViewLink}", "${reportFile.name}")`;
-            }
-            imageUploaded = true;
-          }
-        } else {
-          throw new Error('No image upload method configured.');
+        const auth = getGoogleAuth();
+        const sheets = getSheetsClient();
+        
+        let finalReportURL = ReportFileURL || '';
+        let imageUploaded = false;
+
+        if (finalReportURL.startsWith('=IMAGE(') || finalReportURL.startsWith('=HYPERLINK(')) {
+          imageUploaded = true;
         }
-      } catch (uploadError) {
-        console.error('Image upload failed — sheet will show filename only:', uploadError.message);
-        finalReportURL = reportFile.name || '';
+
+        if (!imageUploaded && reportFile && reportFile.base64) {
+          const isImage = reportFile.type.startsWith('image/');
+          try {
+            if (APPS_SCRIPT_URL) {
+              console.log('Uploading image via Apps Script...');
+              const uploadResult = await uploadToAppsScript(APPS_SCRIPT_URL, reportFile);
+              if (isImage && uploadResult.id) {
+                finalReportURL = buildSheetImageFormula(buildDriveImageUrl(uploadResult.id), uploadResult.url);
+                imageUploaded = true;
+                console.log('Image uploaded to Drive, file ID:', uploadResult.id);
+              } else {
+                finalReportURL = `=HYPERLINK("${uploadResult.url}", "${reportFile.name}")`;
+                imageUploaded = true;
+              }
+            } else if (GOOGLE_DRIVE_FOLDER_ID) {
+              console.log('Uploading via Service Account Drive (requires Google Workspace Shared Drive)...');
+              const driveResponse = await uploadToDrive(auth, reportFile);
+              if (driveResponse && driveResponse.id) {
+                if (isImage) {
+                  finalReportURL = buildSheetImageFormula(buildDriveImageUrl(driveResponse.id), driveResponse.webViewLink);
+                } else {
+                  finalReportURL = `=HYPERLINK("${driveResponse.webViewLink}", "${reportFile.name}")`;
+                }
+                imageUploaded = true;
+              }
+            } else {
+              throw new Error('No image upload method configured.');
+            }
+          } catch (uploadError) {
+            console.error('Image upload failed — sheet will show filename only:', uploadError.message);
+            finalReportURL = reportFile.name || '';
+          }
+        }
+
+        // Append the row to Google Sheets
+        console.log('Appending row to Google Sheets...');
+        await sheets.spreadsheets.values.append({
+          spreadsheetId: SPREADSHEET_ID,
+          range: 'Sheet1!A:N',
+          valueInputOption: 'USER_ENTERED',
+          requestBody: {
+            values: [[
+              Timestamp || new Date().toISOString(),
+              LeadID || '',
+              FullName || '',
+              WhatsAppNumber || '',
+              Email || '',
+              PreferredConsultationDate || '',
+              PreferredConsultationTime || '',
+              TreatmentCategory || '',
+              TreatmentNeeded || '',
+              finalReportURL,
+              Location || '',
+              Language || '',
+              LeadSource || '',
+              Status || 'New Lead'
+            ]],
+          },
+        });
+        console.log('Row successfully appended to Google Sheet for:', FullName);
+      } catch (backgroundError) {
+        console.error('Background sheet append failed:', backgroundError);
       }
+    })();
+
+    // Keep function execution alive on Vercel
+    if (typeof req.waitUntil === 'function') {
+      req.waitUntil(promise);
+    } else if (typeof res.waitUntil === 'function') {
+      res.waitUntil(promise);
     }
-
-    // Append the row to Google Sheets
-    console.log('Appending row to Google Sheets...');
-    await sheets.spreadsheets.values.append({
-      spreadsheetId: SPREADSHEET_ID,
-      range: 'Sheet1!A:N',
-      valueInputOption: 'USER_ENTERED',
-      requestBody: {
-        values: [[
-          Timestamp || new Date().toISOString(),
-          LeadID || '',
-          FullName || '',
-          WhatsAppNumber || '',
-          Email || '',
-          PreferredConsultationDate || '',
-          PreferredConsultationTime || '',
-          TreatmentCategory || '',
-          TreatmentNeeded || '',
-          finalReportURL,
-          Location || '',
-          Language || '',
-          LeadSource || '',
-          Status || 'New Lead'
-        ]],
-      },
-    });
-    console.log('Row successfully appended to Google Sheet for:', FullName);
-
-    // Return success response to the client
-    return res.status(200).json({ success: true, message: 'Form submission received' });
-
-  } catch (error) {
-    console.error('Request processing failed:', error);
-    if (!res.headersSent) {
-      res.status(500).json({ success: false, error: 'Internal Server Error' });
-    }
-  }
 };
