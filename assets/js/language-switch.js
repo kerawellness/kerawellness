@@ -62,61 +62,17 @@ function setupHeroVideos() {
     return;
   }
 
-  const loadHeroVideo = (video, candidates) => {
-    if (!candidates.length || video.dataset.loaded === 'true') {
-      return;
-    }
-
-    video.dataset.loaded = 'true';
+  heroVideos.forEach((video) => {
+    // Ensure all critical mobile autoplay attributes are set in code
     video.muted = true;
     video.playsInline = true;
+    video.loop = true;
+    video.autoplay = true;
+    video.setAttribute('muted', 'true');
+    video.setAttribute('playsinline', 'true');
+    video.setAttribute('webkit-playsinline', 'true');
 
-    let source = video.querySelector('source');
-    if (!source) {
-      source = document.createElement('source');
-      source.type = 'video/mp4';
-      video.appendChild(source);
-    }
-
-    const markLoaded = () => {
-      video.classList.add('is-loaded');
-      video.play().catch(() => {});
-    };
-
-    video.addEventListener('loadeddata', markLoaded, { once: true });
-    video.addEventListener('canplay', markLoaded, { once: true });
-
-    let attempt = 0;
-
-    const trySource = () => {
-      if (attempt >= candidates.length) {
-        markLoaded();
-        return;
-      }
-
-      const nextSrc = candidates[attempt];
-      attempt += 1;
-      source.src = nextSrc;
-      video.preload = 'auto';
-      video.load();
-    };
-
-    video.addEventListener('error', () => {
-      trySource();
-    });
-
-    trySource();
-
-    window.setTimeout(() => {
-      if (!video.classList.contains('is-loaded')) {
-        markLoaded();
-      }
-    }, 1500);
-  };
-
-  heroVideos.forEach((video) => {
-    const filename =
-      video.getAttribute('data-video-file') || getVideoFilenameForPage();
+    const filename = video.getAttribute('data-video-file') || getVideoFilenameForPage();
     const markupSrc = video.querySelector('source')?.getAttribute('src') || '';
     const candidates = [
       ...new Set([
@@ -126,17 +82,119 @@ function setupHeroVideos() {
       ].filter(Boolean)),
     ];
 
-    if (!candidates.length) {
-      return;
-    }
-
-    if (video.readyState >= 2 && markupSrc) {
+    const markLoaded = () => {
       video.classList.add('is-loaded');
-      video.play().catch(() => {});
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.log("Autoplay blocked. Registering interaction trigger.", err);
+          const playOnInteraction = () => {
+            const innerPromise = video.play();
+            if (innerPromise !== undefined) {
+              innerPromise.catch(() => {});
+            }
+            document.removeEventListener("click", playOnInteraction);
+            document.removeEventListener("touchstart", playOnInteraction);
+          };
+          document.addEventListener("click", playOnInteraction);
+          document.addEventListener("touchstart", playOnInteraction);
+        });
+      } else {
+        const playOnInteraction = () => {
+          video.play();
+          document.removeEventListener("click", playOnInteraction);
+          document.removeEventListener("touchstart", playOnInteraction);
+        };
+        document.addEventListener("click", playOnInteraction);
+        document.addEventListener("touchstart", playOnInteraction);
+      }
+    };
+
+    // If readyState is already loaded enough (HAVE_CURRENT_DATA or higher)
+    if (video.readyState >= 2) {
+      markLoaded();
       return;
     }
 
-    loadHeroVideo(video, candidates);
+    // Set event listeners for standard loading/playability events
+    video.addEventListener('loadeddata', markLoaded, { once: true });
+    video.addEventListener('canplay', markLoaded, { once: true });
+
+    // Explicitly try playing to kickstart loading/playback on some mobile browsers
+    const initialPlayPromise = video.play();
+    if (initialPlayPromise !== undefined) {
+      initialPlayPromise.then(() => {
+        markLoaded();
+      }).catch(() => {
+        // Handled in markLoaded fallback if it fails
+      });
+    }
+
+    // Fallback load mechanism: if it fails to load natively after 2 seconds
+    let fallbackTriggered = false;
+    const triggerFallback = () => {
+      if (fallbackTriggered) return;
+      fallbackTriggered = true;
+
+      video.removeEventListener('loadeddata', markLoaded);
+      video.removeEventListener('canplay', markLoaded);
+
+      let attempt = 0;
+      let source = video.querySelector('source');
+      if (!source) {
+        source = document.createElement('source');
+        source.type = 'video/mp4';
+        video.appendChild(source);
+      }
+
+      const tryNextSource = () => {
+        if (attempt >= candidates.length) {
+          markLoaded();
+          return;
+        }
+
+        const nextSrc = candidates[attempt];
+        attempt += 1;
+
+        // Changing video.src directly is much more reliable on mobile Safari than changing <source>
+        if (nextSrc !== markupSrc) {
+          video.src = nextSrc;
+        } else {
+          source.src = nextSrc;
+        }
+        video.preload = 'auto';
+        video.load();
+
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            markLoaded();
+          }).catch((err) => {
+            console.log("Fallback source failed to play:", nextSrc, err);
+            tryNextSource();
+          });
+        } else {
+          markLoaded();
+        }
+      };
+
+      tryNextSource();
+    };
+
+    // If there is an error event on the main source
+    const sourceEl = video.querySelector('source');
+    if (sourceEl) {
+      sourceEl.addEventListener('error', () => {
+        triggerFallback();
+      });
+    }
+
+    // Fallback if the video doesn't play or load within 2 seconds
+    setTimeout(() => {
+      if (!video.classList.contains('is-loaded')) {
+        triggerFallback();
+      }
+    }, 2000);
   });
 }
 
