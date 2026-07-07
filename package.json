@@ -10,5 +10,9 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "googleapis": "^144.0.0"
+  },
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "terser": "^5.48.0"
   }
 }
